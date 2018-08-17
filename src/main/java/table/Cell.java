@@ -47,4 +47,5 @@ public class Cell<T> {
     int getCol() {
         return col;
     }
+
 }

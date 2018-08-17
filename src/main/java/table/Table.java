@@ -29,7 +29,7 @@ public class Table {
 
     public String toPrint(){
 
-        StringBuilder tableToPrint = new StringBuilder("\n\n   ||");
+        StringBuilder tableToPrint = new StringBuilder("   ||");
 
         for(int k=1;k<=numCols;k++){
             tableToPrint.append("  ").append(toAlphabetical(k)).append("  |");
