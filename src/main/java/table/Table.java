@@ -6,10 +6,9 @@ public class Table {
 
     private int numRows;
     private int numCols;
-
     private final HashMap<Integer,HashMap<Integer,Cell>> data;
 
-    public Table(int r, int c){
+    private Table(int r, int c){
         data = new HashMap<>();
         numRows=r;
         numCols=c;
@@ -32,22 +31,45 @@ public class Table {
         StringBuilder tableToPrint = new StringBuilder("   ||");
 
         for(int k=1;k<=numCols;k++){
-            tableToPrint.append("  ").append(toAlphabetical(k)).append("  |");
+            tableToPrint
+                    .append("  ")
+                    .append(toAlphabetical(k))
+                    .append("  |");
         }
-        tableToPrint.append("\n=====");
+
+        tableToPrint
+                .append("\n")
+                .append(stringOfIdenticalSymbols(5,"="));
+
         for(int k=1;k<=numCols;k++){
-            tableToPrint.append("=====|");
+
+            tableToPrint
+                    .append(stringOfIdenticalSymbols(5,"="))
+                    .append("|");
         }
 
 
         for(int i =1;i<=numRows;i++){
-            tableToPrint.append("\n ").append(i).append(" ||");
+            tableToPrint
+                    .append("\n ")
+                    .append(i)
+                    .append(" ||");
+
             for(int j=1;j<=numCols;j++){
-                tableToPrint.append("  ").append(getDataCell(i, j)).append("  |");
+                tableToPrint
+                        .append("  ")
+                        .append(getDataCell(i, j))
+                        .append("  |");
             }
-            tableToPrint.append("\n-----");
+
+            tableToPrint
+                    .append("\n")
+                    .append(stringOfIdenticalSymbols(5,"-"));
+
             for(int j=1;j<=numCols;j++){
-                tableToPrint.append("------");
+                tableToPrint
+                        .append(stringOfIdenticalSymbols(5,"-"))
+                        .append("-");
             }
         }
 
@@ -74,5 +96,13 @@ public class Table {
             i/=26;
         }
         return represent.toString();
+    }
+
+    private String stringOfIdenticalSymbols(int length, String symbol){
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<length;i++){
+            sb.append(symbol);
+        }
+        return sb.toString();
     }
 }
