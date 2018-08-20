@@ -3,7 +3,7 @@ package table;
 public class Cell<T> {
 
     private final String position;
-    private T content;
+    private Object content;
     private int row;
     private int col;
 
@@ -28,12 +28,14 @@ public class Cell<T> {
         return number;
     }
 
-    T getContent() {
+    Object getContent() {
         return content;
     }
 
-    public void setContent(T content) {
-        this.content = content;
+    public void setContent(Object content) {
+        if(this.content.getClass().equals(content.getClass())){
+            this.content=content;
+        }
     }
 
     String getPosition() {
