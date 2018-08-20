@@ -28,6 +28,8 @@ public class Table {
 
     public String toPrint() {
 
+        if(data.size()==0){return "\nEmpty table!\n";}
+
         StringBuilder tableToPrint = new StringBuilder("\n   ||");
 
         for (int k = 1; k <= numCols; k++) {
