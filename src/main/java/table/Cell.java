@@ -1,11 +1,19 @@
 package table;
 
+import java.util.ArrayList;
+
 public class Cell<T> {
 
     private final String position;
     private Object content;
     private int row;
     private int col;
+    private int value;
+
+    private ArrayList<Cell> observers;
+    private void notifyObservers(){
+
+    }
 
     Cell(String position, T content) {
         this.position = position;
