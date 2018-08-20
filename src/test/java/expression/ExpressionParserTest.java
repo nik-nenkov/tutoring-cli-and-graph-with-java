@@ -31,4 +31,9 @@ class ExpressionParserTest {
     void isValidCellPositionTestLongStringIncorrect() {
         assertFalse(isValidCellPosition("AAUHhudisp8657"));
     }
+
+    @Test
+    void parseExpressionTree() {
+
+    }
 }

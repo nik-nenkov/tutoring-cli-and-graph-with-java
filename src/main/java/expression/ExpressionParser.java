@@ -26,7 +26,9 @@ public class ExpressionParser {
         }
     }
 
-    private static Object parseExpressionTree(String input) {
+    public static ExpressionTree parseExpressionTree(String input) {
+        ExpressionTree et = new ExpressionTree();
+        String[] leaves = input.split("[+\\-/*^]");
         return null;
     }
 }
