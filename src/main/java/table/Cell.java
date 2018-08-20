@@ -3,6 +3,9 @@ package table;
 import java.util.ArrayList;
 
 public class Cell<T> {
+    private static final String ERROR_STATE = "Error";
+    private static final String INITIALIZED_STATE = "Initialized";
+    private static final String NOT_INITIALIZED_STATE = "Not initialized";
 
     private final String position;
     private Object content;
@@ -10,16 +13,43 @@ public class Cell<T> {
     private int col;
     private int value;
 
-    private ArrayList<Cell> observers;
-    private void notifyObservers(){
+    /**
+     * Support multiple dependencies for each node:
+     */
+    private ArrayList<Cell> dependencies;
 
-    }
+    /**
+     * Support multiple observers on each cell:
+     */
+    private ArrayList<Cell> observers = new ArrayList<>();
 
+    /**
+     * Handling of cell's states:
+     */
+    private boolean initialized = false;
+    private boolean hasError = false;
+    private String state = NOT_INITIALIZED_STATE;
+
+    /**
+     * Constructor:
+     */
     Cell(String position, T content) {
         this.position = position;
         this.content = content;
         this.row = parseRow(position);
         this.col = parseCol(position);
+    }
+
+    /**
+     *   Recalculating only whats relevant(not everything):
+     */
+    private void recalculate() {
+        boolean response = notifyObservers();
+    }
+
+    private boolean notifyObservers() {
+        observers.forEach(c -> c.notify());
+        return false;
     }
 
     private int parseRow(String position) {
@@ -36,6 +66,9 @@ public class Cell<T> {
         return number;
     }
 
+    /**
+     *   Getters and setters:
+     */
     Object getContent() {
         return content;
     }
