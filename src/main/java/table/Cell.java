@@ -1,17 +1,18 @@
 package table;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class Cell<T> {
+public class Cell {
     private static final String ERROR_STATE = "Error";
     private static final String INITIALIZED_STATE = "Initialized";
     private static final String NOT_INITIALIZED_STATE = "Not initialized";
 
     private final String position;
-    private Object content;
+    private String content;
     private int row;
     private int col;
-    private int value;
+    private BigDecimal value;
 
     /**
      * Support multiple dependencies for each node:
@@ -33,13 +34,26 @@ public class Cell<T> {
     /**
      * Constructor:
      */
-    Cell(String position, T content) {
+    Cell(String position, String content) {
         this.position = position;
         this.content = content;
         this.row = parseRow(position);
         this.col = parseCol(position);
     }
 
+    Cell(String position, long value) {
+        this.position = position;
+        this.value = BigDecimal.valueOf(value);
+        this.row = parseRow(position);
+        this.col = parseCol(position);
+    }
+
+    Cell(String position, double value) {
+        this.position = position;
+        this.value = BigDecimal.valueOf(value);
+        this.row = parseRow(position);
+        this.col = parseCol(position);
+    }
     /**
      *   Recalculating only whats relevant(not everything):
      */
@@ -47,9 +61,8 @@ public class Cell<T> {
         boolean response = notifyObservers();
     }
 
-    private boolean notifyObservers() {
-        observers.forEach(c -> c.notify());
-        return false;
+    public static boolean isCellRefference(String input) {
+        return input.matches("");
     }
 
     private int parseRow(String position) {
@@ -73,10 +86,9 @@ public class Cell<T> {
         return content;
     }
 
-    public void setContent(Object content) {
-        if(this.content.getClass().equals(content.getClass())){
-            this.content=content;
-        }
+    private boolean notifyObservers() {
+        observers.forEach(Object::notify);
+        return false;
     }
 
     String getPosition() {
@@ -91,4 +103,14 @@ public class Cell<T> {
         return col;
     }
 
+    public void setContent(String content) {
+        if (this.content.getClass().equals(content.getClass())) {
+            this.content = content;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }

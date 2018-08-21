@@ -7,12 +7,12 @@ public enum Operation {
     Multiplication("*"),
     Addition("+"),
     Subtraction("-"),
-    Exponentiation("^");
+    Exponentiation("^") {};
 
-    final String operand;
+    final String operation;
 
     Operation(String s) {
-        operand = s;
+        operation = s;
     }
 
     public static Operation fromString(String s) throws InvalidParameterException {

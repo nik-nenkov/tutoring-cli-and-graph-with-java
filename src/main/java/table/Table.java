@@ -82,7 +82,7 @@ public class Table {
         if (data.get(row) != null) {
             return data.get(row).get(col) == null
                     ? " "
-                    : data.get(row).get(col).getContent().toString();
+                    : data.get(row).get(col).toString();
         }
         return " ";
     }

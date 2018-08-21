@@ -2,7 +2,7 @@ package table;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TableTest {
 
@@ -13,10 +13,10 @@ class TableTest {
     @Test
     void toPrint() {
         Table t = new Table();
-        t.putCell(new Cell<>("E8",1));
-        t.putCell(new Cell<>("D1",7));
-        t.putCell(new Cell<>("B4",4));
-        t.putCell(new Cell<>("C3",3));
+        t.putCell(new Cell("E8", 1));
+        t.putCell(new Cell("D1", 7));
+        t.putCell(new Cell("B4", 4));
+        t.putCell(new Cell("C3", 3));
         System.out.println(t.toPrint());
     }
 
