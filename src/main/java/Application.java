@@ -5,6 +5,7 @@ import table.Table;
 import java.util.Scanner;
 
 public class Application {
+
     private static final Table myTable = new Table();
     private static final Scanner scan = new Scanner(System.in);
     private static final String APPLICATION_INFORMATION = "2018 <epam> IS AWESOME!";
@@ -12,7 +13,6 @@ public class Application {
     private static final String GOODBYE_MESSAGE = "See ya later User!";
     private static boolean isRunning = true;
     private static String lastInput;
-    
 
     public static void main(String[] args) {
         print(WELCOME_MESSAGE);
@@ -38,7 +38,7 @@ public class Application {
                 try {
                     ExpressionParser.parse(lastInput, myTable);
                 } catch (InvalidInputException e) {
-                    System.out.println(e.getMessage());
+                    print(e.getMessage());
                 }
                 break;
         }

@@ -5,24 +5,38 @@ import java.util.HashMap;
 public class Table implements TableInterface {
 
     private final HashMap<Integer, HashMap<Integer, Cell>> data;
+    private final HashMap<Integer, Integer> columnWidth;
+    private final int DEFAULT_COLUMN_WIDTH = 5;
     private int numRows;
     private int numCols;
 
     private Table(int r, int c) {
         data = new HashMap<>();
+        columnWidth = new HashMap<>();
         numRows = r;
         numCols = c;
+    }
+
+    private int decideWidth(int column) {
+        return columnWidth.get(column) == null ? DEFAULT_COLUMN_WIDTH : columnWidth.get(column);
     }
 
     public Table() {
         this(0, 0);
     }
 
-    synchronized void putCell(Cell c) {
+    public synchronized void putCell(Cell c) {
         numRows = numRows < c.getRow() ? c.getRow() : numRows;
         numCols = numCols < c.getCol() ? c.getCol() : numCols;
         data.putIfAbsent(c.getRow(), new HashMap<>());
         data.get(c.getRow()).put(c.getCol(), c);
+        columnWidth.put(
+                c.getCol(),
+                c.toString().length() > getColumnWidth(c.getCol())
+                        ? c.toString().length()
+                        : getColumnWidth(c.getCol()
+                )
+        );
     }
 
     public String toPrint() {
@@ -40,12 +54,12 @@ public class Table implements TableInterface {
 
         tableToPrint
                 .append("\n")
-                .append(stringOfIdenticalSymbols(5, "="));
+                .append(stringOfIdenticalSymbols(DEFAULT_COLUMN_WIDTH, "="));
 
         for (int k = 1; k <= numCols; k++) {
 
             tableToPrint
-                    .append(stringOfIdenticalSymbols(5, "="))
+                    .append(stringOfIdenticalSymbols(decideWidth(k), "="))
                     .append("|");
         }
 
@@ -59,17 +73,19 @@ public class Table implements TableInterface {
             for (int j = 1; j <= numCols; j++) {
                 tableToPrint
                         .append("  ")
+                        .append(stringOfIdenticalSymbols(
+                                decideWidth(j) - getDataFromCell(i, j).length(), " "))
                         .append(getDataFromCell(i, j))
                         .append("  |");
             }
 
             tableToPrint
                     .append("\n")
-                    .append(stringOfIdenticalSymbols(5, "-"));
+                    .append(stringOfIdenticalSymbols(DEFAULT_COLUMN_WIDTH, "-"));
 
-            for (int j = 1; j <= numCols; j++) {
+            for (int k = 1; k <= numCols; k++) {
                 tableToPrint
-                        .append(stringOfIdenticalSymbols(5, "-"))
+                        .append(stringOfIdenticalSymbols(decideWidth(k), "-"))
                         .append("-");
             }
         }
@@ -86,10 +102,6 @@ public class Table implements TableInterface {
         return " ";
     }
 
-    /**
-     * @param i is the decimal representation of a number
-     * @return the same number but in a 26-base alphabetical representation
-     */
     private String toAlphabetical(int i) {
         StringBuilder represent = new StringBuilder();
         while (i != 0) {
@@ -123,7 +135,6 @@ public class Table implements TableInterface {
     }
 
     public Cell getCell(String position) {
-
         int row = toRow(position);
         int col = toCol(position);
         return this.data.get(row).get(col);
@@ -141,5 +152,9 @@ public class Table implements TableInterface {
 
     private int toCol(String position) {
         return Integer.parseInt(position.split("^([A-Z]+)")[1]);
+    }
+
+    private int getColumnWidth(int column) {
+        return columnWidth.get(column) == null ? DEFAULT_COLUMN_WIDTH : columnWidth.get(column);
     }
 }

@@ -1,22 +1,23 @@
 package expression;
 
+import table.Cell;
 import table.Table;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static utilities.Checks.isValidCellPosition;
+import static utilities.Checks.*;
 
 public class ExpressionParser {
 
-    private static final String DECIMAL_PATTERN = "^([1-9]+[0-9]*)$";
-    private static final String OPERATION_PATTERN = "[+\\-/*^]";
 
     public static void parse(String lastInput, Table myTable) throws InvalidInputException{
-        String candidatePosition = lastInput.split("=")[0];
-        if(isValidCellPosition(candidatePosition)){
-            //TODO some stuff here
+        String position = lastInput.split("=")[0].trim();
+        String expression = lastInput.split("=")[1].trim();
+
+        if (isValidCellPosition(position) && isValidExpression(expression)) {
+            myTable.putCell(new Cell(position, expression));
         }else{
             throw new InvalidInputException(lastInput);
         }

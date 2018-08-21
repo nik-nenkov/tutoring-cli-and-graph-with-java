@@ -34,7 +34,7 @@ public class Cell {
     /**
      * Constructor:
      */
-    Cell(String position, String content) {
+    public Cell(String position, String content) {
         this.position = position;
         this.content = content;
         this.row = parseRow(position);
@@ -111,6 +111,6 @@ public class Cell {
 
     @Override
     public String toString() {
-        return value.toString();
+        return value == null ? content : value.toString();
     }
 }
