@@ -2,7 +2,7 @@ package table;
 
 import java.util.HashMap;
 
-public class Table {
+public class Table implements TableInterface {
 
     private final HashMap<Integer, HashMap<Integer, Cell>> data;
     private int numRows;
@@ -105,6 +105,21 @@ public class Table {
             sb.append(symbol);
         }
         return sb.toString();
+    }
+
+    @Override
+    public void saveToFile(String fileLocation) {
+
+    }
+
+    @Override
+    public Table loadFromFile(String fileLocation) {
+        return null;
+    }
+
+    @Override
+    public void setCell(String cellPosition) {
+
     }
 
     public Cell getCell(String position) {

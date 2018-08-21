@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashSet;
 
-class ExpressionTree extends Node {
+class ExpressionTree extends Node implements ExpressionTreeInterface {
     private Node root;
     private HashSet<InnerNode> innerNodes;
     private HashSet<LeafNode> leafNodeHashSet;
@@ -20,6 +20,7 @@ class ExpressionTree extends Node {
                 : root.getValue().setScale(2, RoundingMode.HALF_UP);
     }
 
+    @Override
     public void setNewRootMoveOldLeft(Node newRoot) {
 
     }
