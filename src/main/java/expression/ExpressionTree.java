@@ -1,31 +1,38 @@
 package expression;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashSet;
 
-class Tree extends Node {
+class ExpressionTree extends Node {
     private Node root;
     private HashSet<InnerNode> innerNodes;
-    private HashSet<Leaf> leafNodeHashSet;
+    private HashSet<LeafNode> leafNodeHashSet;
 
-    Tree() {
-
+    ExpressionTree(Node n) {
+        root = n;
     }
 
     @Override
     BigDecimal getValue() {
-        return root.getValue();
+
+        return root.getValue() == null ? BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP)
+                : root.getValue().setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public void setNewRootMoveOldLeft(Node newRoot) {
+
     }
 
     public void setRoot(Node root) {
         this.root = root;
     }
 
-    public HashSet<Leaf> getLeafNodeHashSet() {
+    public HashSet<LeafNode> getLeafNodeHashSet() {
         return leafNodeHashSet;
     }
 
-    public void setLeafNodeHashSet(HashSet<Leaf> leafNodeHashSet) {
+    public void setLeafNodeHashSet(HashSet<LeafNode> leafNodeHashSet) {
         this.leafNodeHashSet = leafNodeHashSet;
     }
 

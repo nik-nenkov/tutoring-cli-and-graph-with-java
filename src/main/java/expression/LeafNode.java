@@ -2,10 +2,10 @@ package expression;
 
 import java.math.BigDecimal;
 
-class Leaf extends Node {
+class LeafNode extends Node {
     private BigDecimal value;
 
-    Leaf(String initial) {
+    LeafNode(String initial) {
         value = BigDecimal.valueOf(Double.parseDouble(initial));
     }
 

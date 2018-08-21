@@ -25,7 +25,6 @@ public class Table {
         data.get(c.getRow()).put(c.getCol(), c);
     }
 
-
     public String toPrint() {
 
         if(data.size()==0){return "\nEmpty table!\n";}

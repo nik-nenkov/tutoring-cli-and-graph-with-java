@@ -2,6 +2,8 @@ package expression;
 
 import java.math.BigDecimal;
 
+import static java.math.RoundingMode.HALF_UP;
+
 class InnerNode extends Node {
     private Node leftNode;
     private Node rightNode;
@@ -15,13 +17,16 @@ class InnerNode extends Node {
     BigDecimal getValue() {
         BigDecimal a = leftNode == null ? BigDecimal.ZERO : leftNode.getValue();
         BigDecimal b = rightNode == null ? BigDecimal.ZERO : rightNode.getValue();
-        return calculate(a,operation,b);
+        return calculate(
+                a.setScale(1, HALF_UP),
+                operation,
+                b.setScale(1, HALF_UP));
     }
 
     private BigDecimal calculate(BigDecimal a, Operation operation, BigDecimal b) {
         switch (operation){
             case Division:
-                return a.divide(b);
+                return a.divide(b, HALF_UP);
             case Subtraction:
                 return a.subtract(b);
             case Addition:

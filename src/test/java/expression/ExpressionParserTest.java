@@ -3,10 +3,11 @@ package expression;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-import static expression.ExpressionParser.isValidCellPosition;
 import static expression.ExpressionParser.parseExpressionTree;
 import static org.junit.jupiter.api.Assertions.*;
+import static utilities.Checks.isValidCellPosition;
 
 class ExpressionParserTest {
 
@@ -37,7 +38,7 @@ class ExpressionParserTest {
 
     @Test
     void parseExpressionTreeTest() {
-        Tree et = parseExpressionTree("5");
-        assertEquals(BigDecimal.valueOf(5), et.getValue());
+        ExpressionTree et = parseExpressionTree("5");
+        assertEquals(BigDecimal.valueOf(5).setScale(2, RoundingMode.HALF_UP), et.getValue());
     }
 }
