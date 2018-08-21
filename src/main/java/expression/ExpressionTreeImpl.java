@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashSet;
 
-class ExpressionTree extends Node implements ExpressionTreeInterface {
+class ExpressionTreeImpl extends Node implements ExpressionTree {
     private Node root;
     private HashSet<InnerNode> innerNodes;
     private HashSet<LeafNode> leafNodeHashSet;
 
-    ExpressionTree(Node n) {
+    ExpressionTreeImpl(Node n) {
         root = n;
     }
 

@@ -1,11 +1,12 @@
 package table;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Table implements TableInterface {
 
-    private final HashMap<Integer, HashMap<Integer, Cell>> data;
-    private final HashMap<Integer, Integer> columnWidth;
+    private final Map<Integer, Map<Integer, Cell>> data;
+    private final Map<Integer, Integer> columnWidth;
     private final int DEFAULT_COLUMN_WIDTH = 5;
     private int numRows;
     private int numCols;
@@ -25,15 +26,15 @@ public class Table implements TableInterface {
         this(0, 0);
     }
 
-    public synchronized void putCell(Cell c) {
+    public void putCell(Cell c) {
         numRows = numRows < c.getRow() ? c.getRow() : numRows;
         numCols = numCols < c.getCol() ? c.getCol() : numCols;
         data.putIfAbsent(c.getRow(), new HashMap<>());
         data.get(c.getRow()).put(c.getCol(), c);
         columnWidth.put(
                 c.getCol(),
-                c.toString().length() > getColumnWidth(c.getCol())
-                        ? c.toString().length()
+                c.toString().length() + 4 > getColumnWidth(c.getCol())
+                        ? c.toString().length() + 4
                         : getColumnWidth(c.getCol()
                 )
         );
@@ -48,6 +49,10 @@ public class Table implements TableInterface {
         for (int k = 1; k <= numCols; k++) {
             tableToPrint
                     .append("  ")
+                    .append(stringOfIdenticalSymbols(
+                            decideWidth(k) - 4 - toAlphabetical(k).length(),
+                            " "
+                    ))
                     .append(toAlphabetical(k))
                     .append("  |");
         }
@@ -74,7 +79,9 @@ public class Table implements TableInterface {
                 tableToPrint
                         .append("  ")
                         .append(stringOfIdenticalSymbols(
-                                decideWidth(j) - getDataFromCell(i, j).length(), " "))
+                                decideWidth(j) - 4 - getDataFromCell(i, j).length(),
+                                " "
+                        ))
                         .append(getDataFromCell(i, j))
                         .append("  |");
             }

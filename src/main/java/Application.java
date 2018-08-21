@@ -1,5 +1,5 @@
 import expression.ExpressionParser;
-import expression.InvalidInputException;
+import expression.exception.InvalidInputException;
 import table.Table;
 
 import java.util.Scanner;

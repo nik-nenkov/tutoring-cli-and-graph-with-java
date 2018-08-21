@@ -1,5 +1,6 @@
 package expression;
 
+import expression.exception.InvalidInputException;
 import table.Cell;
 import table.Table;
 
@@ -12,7 +13,7 @@ import static utilities.Checks.*;
 public class ExpressionParser {
 
 
-    public static void parse(String lastInput, Table myTable) throws InvalidInputException{
+    public static void parse(String lastInput, Table myTable) throws InvalidInputException {
         String position = lastInput.split("=")[0].trim();
         String expression = lastInput.split("=")[1].trim();
 
@@ -28,17 +29,19 @@ public class ExpressionParser {
         t.getCell(position).setContent(input);
     }
 
-    static ExpressionTree parseExpressionTree(String input) {
+    static ExpressionTreeImpl parseExpressionTree(String input) {
         // Wherever there are more than one whitespaces, replace them with a single space
+        if (input.matches(DECIMAL_PATTERN)) {
+            return new ExpressionTreeImpl(new LeafNode(input));
+        }
 
         String[] leaves = input.split(OPERATION_PATTERN);
         String[] inners = input.split(DECIMAL_PATTERN);
 
         List<LeafNode> nodeLeaves = Arrays.stream(leaves).map(LeafNode::new).collect(Collectors.toList());
+        List<InnerNode> innerNodes = Arrays.stream(inners).map(InnerNode::new).collect(Collectors.toList());
 
-        if (input.matches(DECIMAL_PATTERN)) {
-            return new ExpressionTree(new LeafNode(input));
-        }
+        //TODO dsa
 
         return null;
     }

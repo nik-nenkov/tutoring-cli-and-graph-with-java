@@ -2,6 +2,7 @@ package table;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Cell {
     private static final String ERROR_STATE = "Error";
@@ -17,12 +18,12 @@ public class Cell {
     /**
      * Support multiple dependencies for each node:
      */
-    private ArrayList<Cell> dependencies;
+    private List<Cell> dependencies;
 
     /**
      * Support multiple observers on each cell:
      */
-    private ArrayList<Cell> observers = new ArrayList<>();
+    private List<Cell> observers = new ArrayList<>();
 
     /**
      * Handling of cell's states:
@@ -87,7 +88,7 @@ public class Cell {
     }
 
     private boolean notifyObservers() {
-        observers.forEach(Object::notify);
+        observers.forEach(Cell::notify);
         return false;
     }
 
@@ -104,9 +105,7 @@ public class Cell {
     }
 
     public void setContent(String content) {
-        if (this.content.getClass().equals(content.getClass())) {
-            this.content = content;
-        }
+        this.content = content;
     }
 
     @Override

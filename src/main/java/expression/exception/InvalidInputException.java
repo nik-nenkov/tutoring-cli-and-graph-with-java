@@ -1,9 +1,9 @@
-package expression;
+package expression.exception;
 
 public class InvalidInputException extends Exception {
     private final String input;
 
-    InvalidInputException(String lastInput) {
+    public InvalidInputException(String lastInput) {
         this.input=lastInput;
     }
 
