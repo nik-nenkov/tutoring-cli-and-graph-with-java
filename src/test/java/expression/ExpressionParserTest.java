@@ -38,13 +38,13 @@ class ExpressionParserTest {
 
     @Test
     void parseExpressionTreeTest() {
-        ExpressionTreeImpl et = parseExpressionTree("5");
+        ExpressionTree et = parseExpressionTree("5");
         assertEquals(BigDecimal.valueOf(5).setScale(2, RoundingMode.HALF_UP), et.getValue());
     }
 
     @Test
     void parseExpressionTreeTestTwo() {
-        ExpressionTreeImpl et = parseExpressionTree("5");
+        ExpressionTree et = parseExpressionTree("5");
         assertEquals(BigDecimal.valueOf(5).setScale(2, RoundingMode.HALF_UP), et.getValue());
     }
 }

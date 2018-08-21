@@ -3,7 +3,7 @@ package table;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Table implements TableInterface {
+public class Table {
 
     private final Map<Integer, Map<Integer, Cell>> data;
     private final Map<Integer, Integer> columnWidth;
@@ -126,20 +126,6 @@ public class Table implements TableInterface {
         return sb.toString();
     }
 
-    @Override
-    public void saveToFile(String fileLocation) {
-
-    }
-
-    @Override
-    public Table loadFromFile(String fileLocation) {
-        return null;
-    }
-
-    @Override
-    public void setCell(String cellPosition) {
-
-    }
 
     public Cell getCell(String position) {
         int row = toRow(position);

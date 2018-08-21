@@ -1,9 +1,12 @@
 package table;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class Cell {
     private static final String ERROR_STATE = "Error";
     private static final String INITIALIZED_STATE = "Initialized";
@@ -55,6 +58,7 @@ public class Cell {
         this.row = parseRow(position);
         this.col = parseCol(position);
     }
+
     /**
      *   Recalculating only whats relevant(not everything):
      */
@@ -83,29 +87,10 @@ public class Cell {
     /**
      *   Getters and setters:
      */
-    Object getContent() {
-        return content;
-    }
 
     private boolean notifyObservers() {
         observers.forEach(Cell::notify);
         return false;
-    }
-
-    String getPosition() {
-        return position;
-    }
-
-    int getRow() {
-        return row;
-    }
-
-    int getCol() {
-        return col;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     @Override

@@ -29,10 +29,10 @@ public class ExpressionParser {
         t.getCell(position).setContent(input);
     }
 
-    static ExpressionTreeImpl parseExpressionTree(String input) {
+    static ExpressionTree parseExpressionTree(String input) {
         // Wherever there are more than one whitespaces, replace them with a single space
         if (input.matches(DECIMAL_PATTERN)) {
-            return new ExpressionTreeImpl(new LeafNode(input));
+            return new ExpressionTree(new LeafNode(input));
         }
 
         String[] leaves = input.split(OPERATION_PATTERN);
