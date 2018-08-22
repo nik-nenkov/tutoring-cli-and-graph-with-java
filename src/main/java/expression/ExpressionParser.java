@@ -35,13 +35,24 @@ public class ExpressionParser {
             return new ExpressionTree(new LeafNode(input));
         }
 
-        String[] leaves = input.split(OPERATION_PATTERN);
-        String[] inners = input.split(DECIMAL_PATTERN);
+        List<String> leaves = Arrays.asList(input.split(OPERATION_PATTERN));
+        List<String> inners = Arrays.asList(input.split(DECIMAL_PATTERN));
 
-        List<LeafNode> nodeLeaves = Arrays.stream(leaves).map(LeafNode::new).collect(Collectors.toList());
-        List<InnerNode> innerNodes = Arrays.stream(inners).map(InnerNode::new).collect(Collectors.toList());
+        List<String> leafNodes = leaves
+                .stream()
+                .map(String::trim)
+                .filter(leaf -> !leaf.equals(""))
+                .collect(Collectors.toList());
+
+        List<String> innerNodes = inners
+                .stream()
+                .map(String::trim)
+                .filter(inner -> !inner.equals(""))
+                .collect(Collectors.toList());
 
         //TODO dsa
+        System.out.println(leafNodes);
+        System.out.println(innerNodes);
 
         return null;
     }

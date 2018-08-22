@@ -47,4 +47,25 @@ class ExpressionParserTest {
         ExpressionTree et = parseExpressionTree("5");
         assertEquals(BigDecimal.valueOf(5).setScale(2, RoundingMode.HALF_UP), et.getValue());
     }
+
+    @Test
+    void parseExpressionTreeGetTwoLinesSecond() {
+        ExpressionTree et = parseExpressionTree("5 - 4 + 3 * 6 / 8 ^ 14 * 3 + 5");
+//        System.out.println(et.getInnerNodes());
+//        System.out.println(et.getLeafNodes());
+    }
+
+    @Test
+    void parseExpressionTreeGetTwoLinesThird() {
+        ExpressionTree et = parseExpressionTree("5-4+3*6/8^14*3+5");
+//        System.out.println(et.getInnerNodes());
+//        System.out.println(et.getLeafNodes());
+    }
+
+    @Test
+    void parseExpressionTreeGetTwoLines() {
+        ExpressionTree et = parseExpressionTree("5 - 4 + 3 * 6 / 8 ^ 14 * 3 + 5");
+//        System.out.println(et.getInnerNodes());
+//        System.out.println(et.getLeafNodes());
+    }
 }

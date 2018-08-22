@@ -7,7 +7,8 @@ import java.util.HashSet;
 class ExpressionTree extends Node {
     private Node root;
     private HashSet<InnerNode> innerNodes;
-    private HashSet<LeafNode> leafNodeHashSet;
+    private HashSet<LeafNode> leafNodes;
+
 
     ExpressionTree(Node n) {
         root = n;
@@ -16,7 +17,7 @@ class ExpressionTree extends Node {
     @Override
     BigDecimal getValue() {
 
-        return root.getValue() == null ? BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP)
+        return root == null ? BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP)
                 : root.getValue().setScale(2, RoundingMode.HALF_UP);
     }
 
@@ -24,12 +25,12 @@ class ExpressionTree extends Node {
         this.root = root;
     }
 
-    public HashSet<LeafNode> getLeafNodeHashSet() {
-        return leafNodeHashSet;
+    public HashSet<LeafNode> getLeafNodes() {
+        return leafNodes;
     }
 
-    public void setLeafNodeHashSet(HashSet<LeafNode> leafNodeHashSet) {
-        this.leafNodeHashSet = leafNodeHashSet;
+    public void setLeafNodes(HashSet<LeafNode> leafNodes) {
+        this.leafNodes = leafNodes;
     }
 
     public HashSet<InnerNode> getInnerNodes() {
