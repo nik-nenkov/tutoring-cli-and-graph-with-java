@@ -26,7 +26,7 @@ public class Table {
         this(0, 0);
     }
 
-    public void putCell(Cell c) {
+    void putCell(Cell c) {
         numRows = numRows < c.getRow() ? c.getRow() : numRows;
         numCols = numCols < c.getCol() ? c.getCol() : numCols;
         data.putIfAbsent(c.getRow(), new HashMap<>());

@@ -106,4 +106,10 @@ class ExpressionParserTest {
         ExpressionTree et = parse("3^2^2");
         assertEquals(BigDecimal.valueOf(81).setScale(6, HALF_UP), et.getValue());
     }
+
+    @Test
+    void hardCoreTest() {
+        ExpressionTree et = parse("5 - 4.5^3/4*7^1.5-5/6/2*7 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5");
+        assertEquals(BigDecimal.valueOf(-414.663910).setScale(6, HALF_UP), et.getValue());
+    }
 }
