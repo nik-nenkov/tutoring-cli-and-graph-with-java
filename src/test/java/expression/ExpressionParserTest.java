@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static expression.ExpressionParser.parseExpressionTree;
+import static expression.ExpressionParser.parse;
 import static org.junit.jupiter.api.Assertions.*;
 import static utilities.Checks.isValidCellPosition;
 
@@ -38,33 +38,33 @@ class ExpressionParserTest {
 
     @Test
     void parseExpressionTreeTest() {
-        ExpressionTree et = parseExpressionTree("5");
+        ExpressionTree et = parse("5");
         assertEquals(BigDecimal.valueOf(5).setScale(2, RoundingMode.HALF_UP), et.getValue());
     }
 
     @Test
     void parseExpressionTreeTestTwo() {
-        ExpressionTree et = parseExpressionTree("5");
+        ExpressionTree et = parse("5");
         assertEquals(BigDecimal.valueOf(5).setScale(2, RoundingMode.HALF_UP), et.getValue());
     }
 
     @Test
     void parseExpressionTreeGetTwoLinesSecond() {
-        ExpressionTree et = parseExpressionTree("5 - 4 + 3 * 6 / 8 ^ 14 * 3 + 5");
+        ExpressionTree et = parse("5 - 4 + 3 * 320 / 8 ^ 2 * 3 + 5");
 //        System.out.println(et.getInnerNodes());
 //        System.out.println(et.getLeafNodes());
     }
 
     @Test
-    void parseExpressionTreeGetTwoLinesThird() {
-        ExpressionTree et = parseExpressionTree("5-4+3*6/8^14*3+5");
+    void parseExpressionTreeGetTwoLinesThirdTry() {
+        ExpressionTree et = parse("5-4+3*6/8^14*3+5");
 //        System.out.println(et.getInnerNodes());
 //        System.out.println(et.getLeafNodes());
     }
 
     @Test
     void parseExpressionTreeGetTwoLines() {
-        ExpressionTree et = parseExpressionTree("5 - 4 + 3 * 6 / 8 ^ 14 * 3 + 5");
+        ExpressionTree et = parse("5 - 4 + 3 * 6 / 8 ^ 14 * 3 + 5");
 //        System.out.println(et.getInnerNodes());
 //        System.out.println(et.getLeafNodes());
     }

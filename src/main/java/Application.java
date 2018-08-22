@@ -1,5 +1,5 @@
-import expression.ExpressionParser;
-import expression.exception.InvalidInputException;
+//import expression.ExpressionParser;
+//import expression.exception.InvalidInputException;
 import table.Table;
 
 import java.util.Scanner;
@@ -35,11 +35,11 @@ public class Application {
                 print(APPLICATION_INFORMATION);
                 break;
             default:
-                try {
-                    ExpressionParser.parse(lastInput, myTable);
-                } catch (InvalidInputException e) {
-                    print(e.getMessage());
-                }
+//                try {
+//                    ExpressionParser.parse(lastInput, myTable);
+//                } catch (InvalidInputException e) {
+//                    print(e.getMessage());
+//                }
                 break;
         }
     }

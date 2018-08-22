@@ -18,13 +18,13 @@ class InnerNode extends Node {
         BigDecimal a = leftNode == null ? BigDecimal.ZERO : leftNode.getValue();
         BigDecimal b = rightNode == null ? BigDecimal.ZERO : rightNode.getValue();
         return calculate(
-                a.setScale(1, HALF_UP),
+                a.setScale(0, HALF_UP),
                 operation,
-                b.setScale(1, HALF_UP));
+                b.setScale(0, HALF_UP));
     }
 
     private BigDecimal calculate(BigDecimal a, Operation operation, BigDecimal b) {
-        switch (operation){
+        switch (operation) {
             case Division:
                 return a.divide(b, HALF_UP);
             case Subtraction:
@@ -40,19 +40,30 @@ class InnerNode extends Node {
         }
     }
 
-    public Node getRightNode() {
-        return rightNode;
-    }
+//    public Node getRightNode() {
+//        return rightNode;
+//    }
 
-    public void setRightNode(Node rightNode) {
+    void setRightNode(Node rightNode) {
         this.rightNode = rightNode;
     }
 
-    public Node getLeftNode() {
-        return leftNode;
+//    public Node getLeftNode() {
+//        return leftNode;
+//    }
+
+    void setLeftNode(Node leftNode) {
+        this.leftNode = leftNode;
     }
 
-    public void setLeftNode(Node leftNode) {
-        this.leftNode = leftNode;
+    @Override
+    public String toString() {
+        if (leftNode == null && rightNode == null) {
+            return operation.getOperator();
+        } else return getValue().toString();
+    }
+
+    int getPriority() {
+        return operation.getPriority();
     }
 }
