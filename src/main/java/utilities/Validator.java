@@ -1,6 +1,10 @@
 package utilities;
 
-public final class Checks {
+public final class Validator {
+
+    public static final String VALID_NUMBER_PATTERN = "([1-9]+[0-9]*\\.?[0-9]*)";
+
+    public static final String VALID_OPERATOR_PATTERN = "([+\\-*/^])";
 
     private static final String CELL_POSITION_PATTERN = "^([A-Z]{1,6})([1-9])([0-9]{0,9})$";
 

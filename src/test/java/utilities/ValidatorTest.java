@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ChecksTest {
+class ValidatorTest {
 
     @Test
     void isValidCellPosition() {
@@ -12,11 +12,11 @@ class ChecksTest {
 
     @Test
     void isValidExpression() {
-        assertTrue(Checks.isValidExpression("4 + 7.954"));
+        assertTrue(Validator.isValidExpression("4 + 7.954"));
     }
 
     @Test
     void isValidExpressionSecondTry() {
-        assertTrue(Checks.isValidExpression("4 + 7.954/983"));
+        assertTrue(Validator.isValidExpression("4 + 7.954/983"));
     }
 }
