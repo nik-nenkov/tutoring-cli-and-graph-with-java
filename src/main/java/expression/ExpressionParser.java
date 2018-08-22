@@ -11,18 +11,13 @@ class ExpressionParser {
 
     static ExpressionTree parseExpressionTreeFromString(String input) {
 
-        List<String> leaves = Arrays.asList(input.split(VALID_OPERATOR_PATTERN));
-        List<String> inners = Arrays.asList(input.split(VALID_NUMBER_PATTERN));
-
-        List<Node> leafNodes = leaves
-                .stream()
+        List<Node> leafNodes = Arrays.stream(input.split(VALID_OPERATOR_PATTERN))
                 .map(String::trim)
                 .filter(leaf -> !leaf.equals(""))
                 .map(LeafNode::new)
                 .collect(Collectors.toList());
 
-        List<InnerNode> innerNodes = inners
-                .stream()
+        List<InnerNode> innerNodes = Arrays.stream(input.split(VALID_NUMBER_PATTERN))
                 .map(String::trim)
                 .filter(inner -> !inner.equals(""))
                 .map(InnerNode::new)
