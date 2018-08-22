@@ -6,13 +6,14 @@ import java.util.stream.Collectors;
 
 class ExpressionParser {
 
-    private static final String VALID_NUMBER_PATTERN = "([1-9]+[0-9]*)";
+    private static final String VALID_NUMBER_PATTERN = "([1-9]+[0-9]*\\.?[0-9]*)";
     private static final String VALID_OPERATOR_PATTERN = "([+\\-*/^])";
 
     static ExpressionTree parse(String input) {
-        if (input.matches(VALID_NUMBER_PATTERN)) {
-            return new ExpressionTree(new LeafNode(input));
-        }
+
+//        if (input.matches(VALID_NUMBER_PATTERN)) {
+//            return new ExpressionTree(new LeafNode(input));
+//        }
 
         List<String> leaves = Arrays.asList(input.split(VALID_OPERATOR_PATTERN));
         List<String> inners = Arrays.asList(input.split(VALID_NUMBER_PATTERN));
@@ -31,11 +32,10 @@ class ExpressionParser {
                 .map(InnerNode::new)
                 .collect(Collectors.toList());
 
-
-        System.out.println("\nState on current iteration:");
-        System.out.println(innerNodes);
-        System.out.println(leafNodes);
-
+//
+//        System.out.println("\nState on current iteration:");
+//        System.out.println(innerNodes);
+//        System.out.println(leafNodes);
 
         int priorityLevel = 4;
 
@@ -50,9 +50,9 @@ class ExpressionParser {
                     innerNodes.remove(i);
                     leafNodes.remove(i + 1);
 
-                    System.out.println("\nState on current iteration:");
-                    System.out.println(innerNodes);
-                    System.out.println(leafNodes);
+//                    System.out.println("\nState on current iteration:");
+//                    System.out.println(innerNodes);
+//                    System.out.println(leafNodes);
                 }
             }
             priorityLevel--;

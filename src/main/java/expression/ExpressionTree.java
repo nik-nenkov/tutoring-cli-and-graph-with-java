@@ -16,9 +16,8 @@ class ExpressionTree extends Node {
 
     @Override
     BigDecimal getValue() {
-
-        return root == null ? BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP)
-                : root.getValue().setScale(2, RoundingMode.HALF_UP);
+        return root == null ? BigDecimal.ZERO
+                : root.getValue().setScale(3, RoundingMode.HALF_UP);
     }
 
     public void setRoot(Node root) {

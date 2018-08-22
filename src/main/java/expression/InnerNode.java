@@ -17,10 +17,7 @@ class InnerNode extends Node {
     BigDecimal getValue() {
         BigDecimal a = leftNode == null ? BigDecimal.ZERO : leftNode.getValue();
         BigDecimal b = rightNode == null ? BigDecimal.ZERO : rightNode.getValue();
-        return calculate(
-                a.setScale(0, HALF_UP),
-                operation,
-                b.setScale(0, HALF_UP));
+        return calculate(a, operation, b);
     }
 
     private BigDecimal calculate(BigDecimal a, Operation operation, BigDecimal b) {
