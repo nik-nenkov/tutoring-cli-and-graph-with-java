@@ -44,8 +44,8 @@ class ExpressionParserTest {
 
     @Test
     void parseExpressionTreeTestTwo() {
-        ExpressionTree et = parse("5");
-        assertEquals(BigDecimal.valueOf(5).setScale(3, RoundingMode.HALF_UP), et.getValue());
+        ExpressionTree et = parse("5     + 7.0");
+        assertEquals(BigDecimal.valueOf(12).setScale(3, RoundingMode.HALF_UP), et.getValue());
     }
 
     @Test

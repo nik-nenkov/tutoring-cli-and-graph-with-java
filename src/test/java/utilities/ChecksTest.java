@@ -14,4 +14,9 @@ class ChecksTest {
     void isValidExpression() {
         assertTrue(Checks.isValidExpression("4 + 7.954"));
     }
+
+    @Test
+    void isValidExpressionSecondTry() {
+        assertTrue(Checks.isValidExpression("4 + 7.954/983"));
+    }
 }
