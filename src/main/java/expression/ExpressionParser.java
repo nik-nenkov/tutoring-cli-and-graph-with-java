@@ -28,21 +28,52 @@ class ExpressionParser {
                 .map(InnerNode::new)
                 .collect(Collectors.toList());
 
-        int priorityLevel = 4;
-        while (priorityLevel >= 0) {
-            int len = innerNodes.size();
-            for (int i = len - 1; i >= 0; i--) {
-                if (innerNodes.get(i).getPriority() == priorityLevel) {
-                    innerNodes.get(i).setLeftNode(leafNodes.get(i));
-                    innerNodes.get(i).setRightNode(leafNodes.get(i + 1));
+//        System.out.println("\nCurrent state:");
+//        System.out.println(innerNodes);
+//        System.out.println(leafNodes);
 
-                    leafNodes.set(i, innerNodes.get(i));
-                    leafNodes.remove(i + 1);
-                    innerNodes.remove(i);
+        int priorityLevel = 4;
+        int len = innerNodes.size();
+        for (int i = len - 1; i >= 0; i--) {
+            if (innerNodes.get(i).getPriority() == priorityLevel) {
+                innerNodes.get(i).setLeftNode(leafNodes.get(i));
+                innerNodes.get(i).setRightNode(leafNodes.get(i + 1));
+
+                leafNodes.set(i, innerNodes.get(i));
+                leafNodes.remove(i + 1);
+                innerNodes.remove(i);
+
+//                System.out.println("\nCurrent state:");
+//                System.out.println(innerNodes);
+//                System.out.println(leafNodes);
+            }
+        }
+        priorityLevel--;
+        while (priorityLevel >= 0) {
+            int i = 0;
+            while (i < innerNodes.size()) {
+                boolean changeWasMade = true;
+                while (changeWasMade && i < innerNodes.size()) {
+                    if (innerNodes.get(i).getPriority() == priorityLevel) {
+                        innerNodes.get(i).setLeftNode(leafNodes.get(i));
+                        innerNodes.get(i).setRightNode(leafNodes.get(i + 1));
+
+                        leafNodes.set(i + 1, innerNodes.get(i));
+                        leafNodes.remove(i);
+                        innerNodes.remove(i);
+
+//                        System.out.println("\nCurrent state:");
+//                        System.out.println(innerNodes);
+//                        System.out.println(leafNodes);
+                    } else {
+                        changeWasMade = false;
+                    }
                 }
+                i++;
             }
             priorityLevel--;
         }
+
 
         return new ExpressionTree(leafNodes.get(0));
     }

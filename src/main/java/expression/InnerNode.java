@@ -1,10 +1,11 @@
 package expression;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static java.math.RoundingMode.HALF_UP;
 
-class InnerNode extends Node {
+class InnerNode implements Node {
     private Node leftNode;
     private Node rightNode;
     private Operation operation;
@@ -14,24 +15,24 @@ class InnerNode extends Node {
     }
 
     @Override
-    BigDecimal getValue() {
-        BigDecimal a = leftNode == null ? BigDecimal.ZERO : leftNode.getValue();
-        BigDecimal b = rightNode == null ? BigDecimal.ZERO : rightNode.getValue();
-        return calculate(a, operation, b);
+    public BigDecimal getValue() {
+        BigDecimal a = leftNode == null ? BigDecimal.ZERO : leftNode.getValue().setScale(6, RoundingMode.HALF_UP);
+        BigDecimal b = rightNode == null ? BigDecimal.ZERO : rightNode.getValue().setScale(6, RoundingMode.HALF_UP);
+        return calculate(a, operation, b).setScale(6, RoundingMode.HALF_UP);
     }
 
     private BigDecimal calculate(BigDecimal a, Operation operation, BigDecimal b) {
         switch (operation) {
             case Division:
-                return a.divide(b, HALF_UP);
+                return a.divide(b, HALF_UP).setScale(6, RoundingMode.HALF_UP);
             case Subtraction:
-                return a.subtract(b);
+                return a.subtract(b).setScale(6, RoundingMode.HALF_UP);
             case Addition:
-                return a.add(b);
+                return a.add(b).setScale(6, RoundingMode.HALF_UP);
             case Exponentiation:
-                return BigDecimal.valueOf(Math.pow(a.doubleValue(), b.doubleValue()));
+                return BigDecimal.valueOf(Math.pow(a.doubleValue(), b.doubleValue())).setScale(6, RoundingMode.HALF_UP);
             case Multiplication:
-                return a.multiply(b);
+                return a.multiply(b).setScale(6, RoundingMode.HALF_UP);
             default:
                 return BigDecimal.ZERO;
         }
