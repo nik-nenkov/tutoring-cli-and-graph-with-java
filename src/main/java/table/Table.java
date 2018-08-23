@@ -118,14 +118,13 @@ public class Table {
         return represent.toString();
     }
 
-    private String stringOfIdenticalSymbols(int length, String symbol) {
+    public static String stringOfIdenticalSymbols(int length, String symbol) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
             sb.append(symbol);
         }
         return sb.toString();
     }
-
 
     public Cell getCell(String position) {
         int row = toRow(position);

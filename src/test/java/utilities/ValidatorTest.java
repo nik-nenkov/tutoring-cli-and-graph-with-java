@@ -2,7 +2,10 @@ package utilities;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.security.InvalidParameterException;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static utilities.Validator.extractTheThingFromInsideTheBrackets;
 
 class ValidatorTest {
 
@@ -18,5 +21,17 @@ class ValidatorTest {
     @Test
     void isValidExpressionSecondTry() {
         assertTrue(Validator.isValidExpression("4 + 7.954/983"));
+    }
+
+    @Test
+    void toFindStringInsideBrackets() {
+        assertEquals("SADS(DSAD)DASD(DASD)DSA",
+                Validator.extractTheThingFromInsideTheBrackets("dsadsad(SADS(DSAD)DASD(DASD)DSA)SADSAD"));
+    }
+
+    @Test
+    void removePartOfString() {
+        assertThrows(InvalidParameterException.class,
+                () -> extractTheThingFromInsideTheBrackets("(ASDF((G(H)J))KL"));
     }
 }

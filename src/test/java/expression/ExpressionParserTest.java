@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 
 import static expression.ExpressionParser.parseExpressionTreeFromString;
+import static expression.ExpressionParser.parseExpressionWithBrackets;
 import static java.math.RoundingMode.HALF_UP;
 import static org.junit.jupiter.api.Assertions.*;
 import static utilities.Validator.isValidCellPosition;
@@ -103,5 +104,10 @@ class ExpressionParserTest {
     void hardCoreTest() {
         ExpressionTree et = parseExpressionTreeFromString("5 - 4.5^3/4*7^1.5-5/6/2*7 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5");
         assertEquals(BigDecimal.valueOf(-414.663910).setScale(6, HALF_UP), et.getValue());
+    }
+
+    @Test
+    void insaneTestWithBrackets() {
+        parseExpressionWithBrackets("3 - 5 / ( 6 / ( 2 * 7 ) + 3 ) * 1 / 4");
     }
 }

@@ -1,11 +1,11 @@
 package expression;
 
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static utilities.Validator.VALID_NUMBER_PATTERN;
-import static utilities.Validator.VALID_OPERATOR_PATTERN;
+import static utilities.Validator.*;
 
 class ExpressionParser {
 
@@ -30,8 +30,15 @@ class ExpressionParser {
             applyFromLeftToRight(leafNodes, innerNodes, priorityLevel);
             priorityLevel--;
         }
-
         return new ExpressionTree(leafNodes.get(0));
+    }
+
+    public static void parseExpressionWithBrackets(String input) {
+        if (input.contains("(") && input.contains(")") && hasValidOrderOfBrackets(input)) {
+
+            //TODO something here
+
+        } else throw new InvalidParameterException();
     }
 
     private static void applyFromRightToLeft(List<Node> leafNodes, List<InnerNode> innerNodes, int priorityLevel) {
