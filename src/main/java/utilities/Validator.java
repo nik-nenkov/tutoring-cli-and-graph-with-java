@@ -10,6 +10,8 @@ public final class Validator {
             "([1-9]+[0-9]*\\.?[0-9]*)|([(]+)|([)]+)";
     public static final String VALID_OPERATOR_PATTERN =
             "([+\\-*/^])";
+    public static final String VALID_OPERATOR_OR_BRACKET_PATTERN =
+            "([+\\-*/^()])";
     private static final String SINGLE_BRACKETS_CLOSED =
             "^[(]([a-zA-Z0-9])+[)]$";
     private static final String CELL_POSITION_PATTERN =

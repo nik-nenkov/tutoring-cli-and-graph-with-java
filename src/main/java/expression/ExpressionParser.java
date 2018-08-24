@@ -1,6 +1,7 @@
 package expression;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ class ExpressionParser {
         int priorityLevel = 4;
         applyFromRightToLeft(leafNodes, innerNodes, priorityLevel);
         priorityLevel--;
+
         while (priorityLevel >= 0) {
             applyFromLeftToRight(leafNodes, innerNodes, priorityLevel);
             priorityLevel--;
@@ -36,7 +38,13 @@ class ExpressionParser {
     public static void parseExpressionWithBrackets(String input) {
         if (input.contains("(") && input.contains(")") && hasValidOrderOfBrackets(input)) {
 
-            //TODO something here
+            List<Node> leafNodes = new ArrayList<>();
+            List<InnerNode> innerNodes = new ArrayList<>();
+
+
+            System.out.println(leafNodes);
+            System.out.println(innerNodes);
+
 
         } else throw new InvalidParameterException();
     }

@@ -26,7 +26,7 @@ class ValidatorTest {
     @Test
     void toFindStringInsideBrackets() {
         assertEquals("SADS(DSAD)DASD(DASD)DSA",
-                Validator.extractTheThingFromInsideTheBrackets("dsadsad(SADS(DSAD)DASD(DASD)DSA)SADSAD"));
+                Validator.extractTheThingFromInsideTheBrackets("dsadsad(SADS(DSAD)DASD(DASD)DSA)njkbhh"));
     }
 
     @Test
@@ -34,4 +34,16 @@ class ValidatorTest {
         assertThrows(InvalidParameterException.class,
                 () -> extractTheThingFromInsideTheBrackets("(ASDF((G(H)J))KL"));
     }
+
+
+    @Test
+    void toFindFirstStringInsideBrackets() {
+        assertEquals("asd(ASD)asd",
+                Validator.extractTheThingFromInsideTheBrackets("dsadsad(SADS(DSAD)DASD((DASD)DSA)SAD)SAD"));
+    }
+
+
+
+
+
 }

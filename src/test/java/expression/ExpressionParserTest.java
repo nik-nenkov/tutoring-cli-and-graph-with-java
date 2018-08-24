@@ -110,4 +110,10 @@ class ExpressionParserTest {
     void insaneTestWithBrackets() {
         parseExpressionWithBrackets("3 - 5 / ( 6 / ( 2 * 7 ) + 3 ) * 1 / 4");
     }
+
+
+    @Test
+    void insaneTestWithBracketsMultiple() {
+        parseExpressionWithBrackets("(3 - 5 )/ (( 6 / ( 2 * 7 ) + 3 ) * 1) / 4");
+    }
 }
