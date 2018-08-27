@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static expression.ExpressionParser.parseExpressionTreeFromString;
-import static expression.ExpressionParser.parseExpressionWithBrackets;
+import static expression.ExpressionParser.*;
 import static java.math.RoundingMode.HALF_UP;
 import static org.junit.jupiter.api.Assertions.*;
 import static utilities.Validator.isValidCellPosition;
@@ -108,12 +107,26 @@ class ExpressionParserTest {
 
     @Test
     void insaneTestWithBrackets() {
-        parseExpressionWithBrackets("3 - 5 / ( 6 / ( 2 * 7 ) + 3 ) * 1 / 4");
+        System.out.println(
+                parseExpressionWithBrackets("3 - 5 / ( 6 + 3 - 5 / ( 6 + 3 - 5 / ( 6 + 3 ) ) )").getValue()
+        );
     }
-
 
     @Test
     void insaneTestWithBracketsMultiple() {
-        parseExpressionWithBrackets("(3 - 5 )/ (( 6 / ( 2 * 7 ) + 3 ) * 1) / 4");
+        doSomething("(3 - 5 )/ (( 6 / ( 2 * 7 ) + 3 ) * 1) / 4");
+
+    }
+
+    @Test
+    void twoPlusTwo() {
+        assertEquals(BigDecimal.valueOf(2.5).setScale(6, HALF_UP),
+                parseExpressionWithBrackets("2+((2*(3/3))*4)").getValue());
+    }
+
+    @Test
+    void twoPlusTwoBracketsFirst() {
+        assertEquals(BigDecimal.valueOf(25).setScale(6, HALF_UP),
+                parseExpressionWithBrackets("2+(4+(3*4)+(2*3)+1)").getValue());
     }
 }

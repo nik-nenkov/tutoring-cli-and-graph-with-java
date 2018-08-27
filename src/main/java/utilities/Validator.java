@@ -62,7 +62,7 @@ public final class Validator {
         } else throw new InvalidParameterException();
     }
 
-    private static int checkCharacter(char character) {
+    public static int checkIfCharacterIsBracket(char character) {
         switch (character) {
             case '(':
                 return 1;
@@ -79,14 +79,14 @@ public final class Validator {
         int end = input.length();
 
         for (int i = 0; i < input.length() - 2; i++) {
-            if (checkCharacter(input.charAt(i)) == 1) {
+            if (checkIfCharacterIsBracket(input.charAt(i)) == 1) {
                 start = i + 1;
                 break;
             }
         }
 
         for (int i = input.length() - 1; i >= 0; i--) {
-            if (checkCharacter(input.charAt(i)) == -1) {
+            if (checkIfCharacterIsBracket(input.charAt(i)) == -1) {
                 end = i;
                 break;
             }
@@ -98,7 +98,7 @@ public final class Validator {
     public static boolean hasValidOrderOfBrackets(String input) {
         int counter = 0;
         for (int i = 0; i < input.length(); i++) {
-            counter += checkCharacter(input.charAt(i));
+            counter += checkIfCharacterIsBracket(input.charAt(i));
             if (counter < 0) {
                 return false;
             }

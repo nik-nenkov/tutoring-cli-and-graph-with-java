@@ -1,6 +1,5 @@
 package expression;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,17 +11,10 @@ class ExpressionParser {
 
     static ExpressionTree parseExpressionTreeFromString(String input) {
 
-        List<Node> leafNodes = Arrays.stream(input.split(VALID_OPERATOR_PATTERN))
-                .map(String::trim)
-                .filter(leaf -> !leaf.equals(""))
-                .map(LeafNode::new)
-                .collect(Collectors.toList());
+        List<Node> leafNodes = new ArrayList<>();
+        List<InnerNode> innerNodes = new ArrayList<>();
 
-        List<InnerNode> innerNodes = Arrays.stream(input.split(VALID_NUMBER_PATTERN))
-                .map(String::trim)
-                .filter(inner -> !inner.equals(""))
-                .map(InnerNode::new)
-                .collect(Collectors.toList());
+        appendArraysWithExpression(input, leafNodes, innerNodes);
 
         int priorityLevel = 4;
         applyFromRightToLeft(leafNodes, innerNodes, priorityLevel);
@@ -32,21 +24,73 @@ class ExpressionParser {
             applyFromLeftToRight(leafNodes, innerNodes, priorityLevel);
             priorityLevel--;
         }
+
         return new ExpressionTree(leafNodes.get(0));
     }
 
-    public static void parseExpressionWithBrackets(String input) {
+    static ExpressionTree parseExpressionWithBrackets(String input1) {
+
+        String input = input1.trim().replace(" ", "");
+        List<Node> leafNodes = new ArrayList<>();
+        List<InnerNode> innerNodes = new ArrayList<>();
+
+        int balance = 0;
+        int start = 0;
+
         if (input.contains("(") && input.contains(")") && hasValidOrderOfBrackets(input)) {
 
-            List<Node> leafNodes = new ArrayList<>();
-            List<InnerNode> innerNodes = new ArrayList<>();
 
+            for (int i = 0; i < input.length(); i++) {
 
-            System.out.println(leafNodes);
-            System.out.println(innerNodes);
+                if (input.charAt(i) == '(') {
+                    appendArraysWithExpression(input.substring(start, i), leafNodes, innerNodes);
+                    start = i;
+                    balance = 1;
+                    while (balance > 0) {
+                        i = i + 1;
+                        balance = checkIfCharacterIsBracket(input.charAt(i));
+                    }
+                    System.out.println(input.substring(start, i - 1));
+                    leafNodes.add(parseExpressionWithBrackets(input.substring(start, i - 1)));
+                } else {
+                    start = i;
+                    while (i < input.length() && checkIfCharacterIsBracket(input.charAt(i)) == 0) {
+                        i++;
+                    }
+                    System.out.println(input.substring(start, i));
+                    appendArraysWithExpression(input.substring(start, i), leafNodes, innerNodes);
+                }
 
+            }
 
-        } else throw new InvalidParameterException();
+            int priorityLevel = 4;
+            applyFromRightToLeft(leafNodes, innerNodes, priorityLevel);
+            priorityLevel--;
+
+            while (priorityLevel >= 0) {
+                applyFromLeftToRight(leafNodes, innerNodes, priorityLevel);
+                priorityLevel--;
+            }
+
+            return new ExpressionTree(leafNodes.get(0));
+
+        } else {
+            return parseExpressionTreeFromString(input);
+        }
+    }
+
+    private static void appendArraysWithExpression(String input, List<Node> leafNodes, List<InnerNode> innerNodes) {
+        leafNodes.addAll(Arrays.stream(input.split(VALID_OPERATOR_PATTERN))
+                .map(String::trim)
+                .filter(leaf -> !leaf.equals(""))
+                .map(LeafNode::new)
+                .collect(Collectors.toList()));
+
+        innerNodes.addAll(Arrays.stream(input.split(VALID_NUMBER_PATTERN))
+                .map(String::trim)
+                .filter(inner -> !inner.equals(""))
+                .map(InnerNode::new)
+                .collect(Collectors.toList()));
     }
 
     private static void applyFromRightToLeft(List<Node> leafNodes, List<InnerNode> innerNodes, int priorityLevel) {
@@ -79,6 +123,18 @@ class ExpressionParser {
                 }
             }
             while (changeWasMade && i < innerNodes.size());
+        }
+    }
+
+
+    static void doSomething(String input) {
+        String trimmed = input.replace(" ", "").trim();
+        int pointer = 0;
+        int balance = 0;
+        while (pointer < trimmed.length()) {
+            balance += checkIfCharacterIsBracket(trimmed.charAt(pointer));
+            System.out.println("[" + pointer + "]" + "[" + balance + "] " + trimmed.charAt(pointer));
+            pointer++;
         }
     }
 }
