@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 
 import static java.math.RoundingMode.HALF_UP;
 
-class InnerNode extends Node {
+class InnerNode implements Node {
     private Node leftNode;
     private Node rightNode;
     private Operation operation;

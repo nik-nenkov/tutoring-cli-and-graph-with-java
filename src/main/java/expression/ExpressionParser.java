@@ -83,7 +83,7 @@ class ExpressionParser {
         leafNodes.addAll(Arrays.stream(input.split(VALID_OPERATOR_PATTERN))
                 .map(String::trim)
                 .filter(leaf -> !leaf.equals(""))
-                .map(Node::new)
+                .map(LeafNode::new)
                 .collect(Collectors.toList()));
 
         innerNodes.addAll(Arrays.stream(input.split(VALID_NUMBER_PATTERN))
