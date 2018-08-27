@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashSet;
 
-class ExpressionTree implements Node {
+class ExpressionTree extends Node {
     private Node root;
     private HashSet<InnerNode> innerNodes;
-    private HashSet<LeafNode> leafNodes;
-
+    private HashSet<Node> nodes;
 
     ExpressionTree(Node n) {
+        super();
         root = n;
     }
 
@@ -24,12 +24,12 @@ class ExpressionTree implements Node {
         this.root = root;
     }
 
-    public HashSet<LeafNode> getLeafNodes() {
-        return leafNodes;
+    public HashSet<Node> getNodes() {
+        return nodes;
     }
 
-    public void setLeafNodes(HashSet<LeafNode> leafNodes) {
-        this.leafNodes = leafNodes;
+    public void setNodes(HashSet<Node> nodes) {
+        this.nodes = nodes;
     }
 
     public HashSet<InnerNode> getInnerNodes() {
