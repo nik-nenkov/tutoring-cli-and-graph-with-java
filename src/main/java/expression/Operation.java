@@ -9,11 +9,9 @@ public enum Operation {
     Subtraction("-"),
     Exponentiation("^");
 
-    final private String operator;
-    final private Integer priority;
+    private final Integer priority;
 
     Operation(String s) {
-        operator = s;
         switch (s) {
             case "+":
                 priority = 0;
@@ -50,10 +48,6 @@ public enum Operation {
             default:
                 throw new InvalidParameterException();
         }
-    }
-
-    public String getOperator() {
-        return operator;
     }
 
     public Integer getPriority() {

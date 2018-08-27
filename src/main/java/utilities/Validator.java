@@ -4,14 +4,10 @@ import java.security.InvalidParameterException;
 
 public final class Validator {
 
-    public static final String VALID_NUMBER_PATTERN =
+    private static final String VALID_NUMBER_PATTERN =
             "([1-9]+[0-9]*\\.?[0-9]*)";
-    public static final String VALID_NUMBER_OR_BRACKET_PATTERN =
+    private static final String VALID_NUMBER_OR_BRACKET_PATTERN =
             "([1-9]+[0-9]*\\.?[0-9]*)|([(]+)|([)]+)";
-    public static final String VALID_OPERATOR_PATTERN =
-            "([+\\-*/^])";
-    public static final String VALID_OPERATOR_OR_BRACKET_PATTERN =
-            "([+\\-*/^()])";
     private static final String SINGLE_BRACKETS_CLOSED =
             "^[(]([a-zA-Z0-9])+[)]$";
     private static final String CELL_POSITION_PATTERN =
@@ -62,7 +58,7 @@ public final class Validator {
         } else throw new InvalidParameterException();
     }
 
-    public static int checkIfCharacterIsBracket(char character) {
+    private static int checkIfCharacterIsBracket(char character) {
         switch (character) {
             case '(':
                 return 1;
@@ -95,7 +91,7 @@ public final class Validator {
         return input.substring(start, end);
     }
 
-    public static boolean hasValidOrderOfBrackets(String input) {
+    private static boolean hasValidOrderOfBrackets(String input) {
         int counter = 0;
         for (int i = 0; i < input.length(); i++) {
             counter += checkIfCharacterIsBracket(input.charAt(i));

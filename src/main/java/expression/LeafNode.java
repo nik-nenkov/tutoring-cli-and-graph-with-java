@@ -15,8 +15,4 @@ class LeafNode implements Node {
         return value == null ? BigDecimal.ZERO : value.setScale(6, RoundingMode.HALF_UP);
     }
 
-    @Override
-    public String toString() {
-        return value.toString();
-    }
 }

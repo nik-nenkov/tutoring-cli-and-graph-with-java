@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static expression.ExpressionParser.*;
+import static expression.ExpressionParser.parse;
 import static java.math.RoundingMode.HALF_UP;
 import static org.junit.jupiter.api.Assertions.*;
 import static utilities.Validator.isValidCellPosition;
@@ -18,7 +18,7 @@ class ExpressionParserTest {
 
     @Test
     void isValidCellPositionTestLongStringCorrect() {
-        assertTrue(isValidCellPosition("KXVCD3354367"));
+        assertTrue(isValidCellPosition("KXBCD3354367"));
     }
 
     @Test
@@ -28,29 +28,29 @@ class ExpressionParserTest {
 
     @Test
     void isValidCellPositionTestWrongLetters() {
-        assertFalse(isValidCellPosition("xkcd7"));
+        assertFalse(isValidCellPosition("xkCd7"));
     }
 
     @Test
     void isValidCellPositionTestLongStringIncorrect() {
-        assertFalse(isValidCellPosition("AAUHhudisp8657"));
+        assertFalse(isValidCellPosition("AAuHHudDsp8657"));
     }
 
     @Test
     void parseExpressionTreeTest() {
-        ExpressionTree et = parseExpressionTreeFromString("5");
+        ExpressionTree et = parse("5");
         assertEquals(BigDecimal.valueOf(5).setScale(6, HALF_UP), et.getValue());
     }
 
     @Test
     void parseExpressionTreeTestTwo() {
-        ExpressionTree et = parseExpressionTreeFromString("5     + 7.0");
+        ExpressionTree et = parse("5     + 7.0");
         assertEquals(BigDecimal.valueOf(12).setScale(6, HALF_UP), et.getValue());
     }
 
     @Test
     void parseExpressionTreeGetTwoLinesSecond() {
-        ExpressionTree et = parseExpressionTreeFromString("5 - 4 + 3 *      " +
+        ExpressionTree et = parse("5 - 4 + 3 *      " +
                 "" +
                 "" +
 
@@ -65,69 +65,67 @@ class ExpressionParserTest {
 
     @Test
     void parseExpressionTreeGetTwoLinesThirdTry() {
-        ExpressionTree et = parseExpressionTreeFromString("5 - 4.565 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5");
-        assertEquals(BigDecimal.valueOf(5.602409).setScale(6, HALF_UP), et.getValue());
+        assertEquals(BigDecimal.valueOf(5.602409).setScale(6, HALF_UP),
+                parse("5 - 4.565 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5").getValue());
     }
 
     @Test
     void parseExpressionTreeGetTwoLines() {
-        ExpressionTree et = parseExpressionTreeFromString("5 - 4.565 + 3 * 320.576 / 8 ^ 2 * 3.565 + 5");
-        assertEquals(BigDecimal.valueOf(59.006255).setScale(6, HALF_UP), et.getValue());
+        assertEquals(BigDecimal.valueOf(59.006255).setScale(6, HALF_UP),
+                parse("5 - 4.565 + 3 * 320.576 / 8 ^ 2 * 3.565 + 5").getValue());
     }
 
     @Test
     void simpleSum() {
-        ExpressionTree et = parseExpressionTreeFromString("1 + 3 + 5 + 7 + 4");
-        assertEquals(BigDecimal.valueOf(20).setScale(6, HALF_UP), et.getValue());
+        assertEquals(BigDecimal.valueOf(20).setScale(6, HALF_UP),
+                parse("1 + 3 + 5 + 7 + 4").getValue());
     }
 
     @Test
     void multiplicationAndSum() {
-        ExpressionTree et = parseExpressionTreeFromString("1 * 3 + 5 * 7 * 4");
-        assertEquals(BigDecimal.valueOf(143).setScale(6, HALF_UP), et.getValue());
+        assertEquals(BigDecimal.valueOf(143).setScale(6, HALF_UP),
+                parse("1 * 3 + 5 * 7 * 4").getValue());
     }
 
     @Test
     void complicatedDivision() {
-        ExpressionTree et = parseExpressionTreeFromString("3/4/2");
-        assertEquals(BigDecimal.valueOf(0.375).setScale(6, HALF_UP), et.getValue());
+        assertEquals(BigDecimal.valueOf(0.375).setScale(6, HALF_UP),
+                parse("3/4/2").getValue());
     }
 
     @Test
     void complicatedExponentiation() {
-        ExpressionTree et = parseExpressionTreeFromString("3^2^2");
-        assertEquals(BigDecimal.valueOf(81).setScale(6, HALF_UP), et.getValue());
+        assertEquals(BigDecimal.valueOf(81).setScale(6, HALF_UP),
+                parse("3^2^2").getValue());
     }
 
     @Test
     void hardCoreTest() {
-        ExpressionTree et = parseExpressionTreeFromString("5 - 4.5^3/4*7^1.5-5/6/2*7 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5");
-        assertEquals(BigDecimal.valueOf(-414.663910).setScale(6, HALF_UP), et.getValue());
+        assertEquals(BigDecimal.valueOf(-414.663910).setScale(6, HALF_UP),
+                parse("5 - 4.5^3/4*7^1.5-5/6/2*7 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5").getValue());
     }
 
     @Test
     void insaneTestWithBrackets() {
-        System.out.println(
-                parseExpressionWithBrackets("3 - 5 / ( 6 + 3 - 5 / ( 6 + 3 - 5 / ( 6 + 3 ) ) )").getValue()
-        );
+        assertEquals(BigDecimal.valueOf(2.40532081377).setScale(6, HALF_UP),
+                parse("3 - 5 / ( 6 + 3 - 5 / ( 6 + 3 - 5 / ( 6 + 3 ) ) )").getValue());
     }
 
     @Test
     void insaneTestWithBracketsMultiple() {
-        doSomething("(3 - 5 )/ (( 6 / ( 2 * 7 ) + 3 ) * 1) / 4");
-
+        assertEquals(BigDecimal.valueOf(-0.14583333333).setScale(6, HALF_UP),
+                parse("(3 - 5 )/ (( 6 / ( 2 * 7 ) + 3 ) * 1) / 4").getValue());
     }
 
     @Test
     void twoPlusTwo() {
-        //TODO set this right !!!
-        assertEquals(BigDecimal.valueOf(2.5).setScale(6, HALF_UP),
-                parseExpressionWithBrackets("2+((2*(3/3))*4)").getValue());
+        assertEquals(BigDecimal.valueOf(10).setScale(6, HALF_UP),
+                parse("2+((2*(3/3))*4)").getValue());
     }
 
     @Test
     void twoPlusTwoBracketsFirst() {
         assertEquals(BigDecimal.valueOf(25).setScale(6, HALF_UP),
-                parseExpressionWithBrackets("2+(4+(3*4)+(2*3)+1)").getValue());
+                parse("2+(4+(3*4)+(2*3)+1)").getValue());
     }
 }
