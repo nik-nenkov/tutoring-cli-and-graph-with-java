@@ -1,5 +1,7 @@
 package table;
 
+import expression.ExpressionTree;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,7 +120,7 @@ public class Table {
         return represent.toString();
     }
 
-    public static String stringOfIdenticalSymbols(int length, String symbol) {
+    private static String stringOfIdenticalSymbols(int length, String symbol) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
             sb.append(symbol);
@@ -148,5 +150,10 @@ public class Table {
 
     private int getColumnWidth(int column) {
         return columnWidth.get(column) == null ? DEFAULT_COLUMN_WIDTH : columnWidth.get(column);
+    }
+
+    public void setCell(String cellPosition, ExpressionTree parsedTree) {
+        Cell c = new Cell(cellPosition, parsedTree.getValue().doubleValue());
+        this.putCell(c);
     }
 }

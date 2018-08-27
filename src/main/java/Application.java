@@ -1,5 +1,7 @@
 //import expression.ExpressionParser;
 //import expression.exception.InvalidInputException;
+
+import expression.ExpressionParser;
 import table.Table;
 
 import java.util.Scanner;
@@ -35,16 +37,17 @@ public class Application {
                 print(APPLICATION_INFORMATION);
                 break;
             default:
-//                try {
-//                    ExpressionParser.parse(lastInput, myTable);
-//                } catch (InvalidInputException e) {
-//                    print(e.getMessage());
-//                }
+                processEntry();
                 break;
         }
     }
 
     private static void print(String message){
         System.out.println(message);
+    }
+
+    private static void processEntry() {
+        String[] parts = lastInput.split("=");
+        myTable.setCell(parts[0].trim(), ExpressionParser.parse(parts[1]));
     }
 }

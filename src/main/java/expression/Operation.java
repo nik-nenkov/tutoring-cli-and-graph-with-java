@@ -1,6 +1,9 @@
 package expression;
 
+import java.math.BigDecimal;
 import java.security.InvalidParameterException;
+
+import static java.math.RoundingMode.HALF_UP;
 
 public enum Operation {
     Division("/"),
@@ -25,11 +28,8 @@ public enum Operation {
             case "/":
                 priority = 3;
                 break;
-            case "^":
-                priority = 4;
-                break;
             default:
-                throw new InvalidParameterException();
+                priority = 4;
         }
     }
 
@@ -43,14 +43,27 @@ public enum Operation {
                 return Operation.Multiplication;
             case "/":
                 return Operation.Division;
-            case "^":
-                return Operation.Exponentiation;
             default:
-                throw new InvalidParameterException();
+                return Operation.Exponentiation;
         }
     }
 
     public Integer getPriority() {
         return priority;
+    }
+
+    public BigDecimal calculate(BigDecimal a, BigDecimal b) {
+        switch (this) {
+            case Division:
+                return a.divide(b, HALF_UP);
+            case Subtraction:
+                return a.subtract(b);
+            case Addition:
+                return a.add(b);
+            case Multiplication:
+                return a.multiply(b);
+            default:
+                return BigDecimal.valueOf(Math.pow(a.doubleValue(), b.doubleValue()));
+        }
     }
 }

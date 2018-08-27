@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static expression.Validator.*;
+import static utilities.Validator.*;
 
-class ExpressionParser {
+public class ExpressionParser {
 
-    static ExpressionTree parse(String input1) {
+    public static ExpressionTree parse(String input1) {
         String input = removeEmptySpaces(input1);
         List<Node> leafNodes = new ArrayList<>();
         List<InnerNode> innerNodes = new ArrayList<>();

@@ -3,6 +3,35 @@ package utilities;
 import java.security.InvalidParameterException;
 
 public final class Validator {
+    private static final String VALID_OPERATOR_PATTERN = "([+\\-*/^])";
+    private static final String VALID_DECIMAL_PATTERN = "(([1-9][0-9]*)|([0]))([.][0-9]{1,8})?";
+
+    public static String removeEmptySpaces(String input) {
+        return input.trim()
+                .replace("\n", "")
+                .replace("\t", "")
+                .replace(" ", "");
+    }
+
+    static boolean isValidOperator(String input) {
+        return input.matches("^" + VALID_OPERATOR_PATTERN + "$");
+    }
+
+    static boolean isValidDecimal(String input) {
+        return input.matches("^" + VALID_DECIMAL_PATTERN + "$");
+    }
+
+    public static String[] extractDecimals(String input) {
+        return input.split(VALID_DECIMAL_PATTERN);
+    }
+
+    public static String[] extractOperators(String input) {
+        return input.split(VALID_OPERATOR_PATTERN);
+    }
+
+
+
+
 
     private static final String VALID_NUMBER_PATTERN =
             "([1-9]+[0-9]*\\.?[0-9]*)";
@@ -13,9 +42,6 @@ public final class Validator {
     private static final String CELL_POSITION_PATTERN =
             "^([A-Z]{1,6})([1-9])([0-9]{0,9})$";
 
-    private static final String DECIMAL_PATTERN =
-            "(([1-9]+[0-9]*)?(\\.[0-9]+)?)";
-
     private static final String OPERATION_PATTERN =
             "([+\\-/*^])";
 
@@ -24,7 +50,7 @@ public final class Validator {
                     "(([1-9]+[0-9]*)?(\\.[0-9]+)?))([\\s]*)([+\\-/*^])?)*$";
 
 
-    public static boolean isValidCellPosition(String position) {
+    static boolean isValidCellPosition(String position) {
         return position.matches(CELL_POSITION_PATTERN);
     }
 
@@ -36,9 +62,6 @@ public final class Validator {
         return input.matches(SINGLE_BRACKETS_CLOSED);
     }
 
-    static boolean isValidDecimal(String candidate) {
-        return candidate.matches(DECIMAL_PATTERN);
-    }
 
     static boolean isValidOperation(String candidate) {
         return candidate.matches(OPERATION_PATTERN);

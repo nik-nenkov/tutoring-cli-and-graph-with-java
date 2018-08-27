@@ -6,11 +6,33 @@ import java.security.InvalidParameterException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static utilities.Validator.extractTheThingFromInsideTheBrackets;
+import static utilities.Validator.isValidCellPosition;
 
 class ValidatorTest {
 
     @Test
-    void isValidCellPosition() {
+    void isValidCellPositionTest() {
+        assertTrue(isValidCellPosition("A3"));
+    }
+
+    @Test
+    void isValidCellPositionTestLongStringCorrect() {
+        assertTrue(isValidCellPosition("KXBCD3354367"));
+    }
+
+    @Test
+    void isValidCellPositionTestWrongNumber() {
+        assertFalse(isValidCellPosition("A01"));
+    }
+
+    @Test
+    void isValidCellPositionTestWrongLetters() {
+        assertFalse(isValidCellPosition("xkCd7"));
+    }
+
+    @Test
+    void isValidCellPositionTestLongStringIncorrect() {
+        assertFalse(isValidCellPosition("AAuHHudDsp8657"));
     }
 
     @Test

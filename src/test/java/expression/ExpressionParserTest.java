@@ -6,35 +6,9 @@ import java.math.BigDecimal;
 
 import static expression.ExpressionParser.parse;
 import static java.math.RoundingMode.HALF_UP;
-import static org.junit.jupiter.api.Assertions.*;
-import static utilities.Validator.isValidCellPosition;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ExpressionParserTest {
-
-    @Test
-    void isValidCellPositionTest() {
-        assertTrue(isValidCellPosition("A3"));
-    }
-
-    @Test
-    void isValidCellPositionTestLongStringCorrect() {
-        assertTrue(isValidCellPosition("KXBCD3354367"));
-    }
-
-    @Test
-    void isValidCellPositionTestWrongNumber() {
-        assertFalse(isValidCellPosition("A01"));
-    }
-
-    @Test
-    void isValidCellPositionTestWrongLetters() {
-        assertFalse(isValidCellPosition("xkCd7"));
-    }
-
-    @Test
-    void isValidCellPositionTestLongStringIncorrect() {
-        assertFalse(isValidCellPosition("AAuHHudDsp8657"));
-    }
 
     @Test
     void parseExpressionTreeTest() {

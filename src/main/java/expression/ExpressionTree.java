@@ -3,7 +3,7 @@ package expression;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-class ExpressionTree implements Node {
+public class ExpressionTree implements Node {
     private Node root;
     ExpressionTree(Node n) {
         root = n;
