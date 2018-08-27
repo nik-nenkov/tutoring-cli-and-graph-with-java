@@ -120,6 +120,7 @@ class ExpressionParserTest {
 
     @Test
     void twoPlusTwo() {
+        //TODO set this right !!!
         assertEquals(BigDecimal.valueOf(2.5).setScale(6, HALF_UP),
                 parseExpressionWithBrackets("2+((2*(3/3))*4)").getValue());
     }
