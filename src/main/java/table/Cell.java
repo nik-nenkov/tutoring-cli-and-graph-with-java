@@ -103,13 +103,13 @@ public class Cell {
 
     @Override
     public String toString() {
-        if (value == null) {
-            if (content == null) {
-                return expression.getValue().stripTrailingZeros().toPlainString();
-            }
-            return content;
-        }
-        return value.stripTrailingZeros().toPlainString();
+        if (expression != null) return expression.getValue().stripTrailingZeros().toPlainString();
+
+        if (value != null) return value.stripTrailingZeros().toPlainString();
+
+        if (content != null) return content;
+
+        return " ";
     }
 
     public ExpressionTree getExpression() {

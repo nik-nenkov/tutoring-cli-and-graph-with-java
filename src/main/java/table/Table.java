@@ -41,13 +41,8 @@ public class Table {
         numCols = numCols < c.getCol() ? c.getCol() : numCols;
         data.putIfAbsent(c.getRow(), new HashMap<>());
         data.get(c.getRow()).put(c.getCol(), c);
-        columnWidth.put(
-                c.getCol(),
-                c.toString().length() + 4 > getColumnWidth(c.getCol())
-                        ? c.toString().length() + 4
-                        : getColumnWidth(c.getCol()
-                )
-        );
+
+        fixWidth(c);
     }
 
     public String toPrint() {
@@ -142,6 +137,13 @@ public class Table {
     }
 
     private int toRow(String position) {
+
+        return Integer.parseInt(position.split("^([A-Z]+)")[1]);
+
+
+    }
+
+    private int toCol(String position) {
         char[] alphabetical = position.split("([1-9]+)([0-9]*)$")[0].toCharArray();
         int val = 0;
         for (char letter : alphabetical) {
@@ -150,11 +152,6 @@ public class Table {
         }
         return val;
     }
-
-    private int toCol(String position) {
-        return Integer.parseInt(position.split("^([A-Z]+)")[1]);
-    }
-
 
     /**
      * Checks if cell exists on
@@ -166,10 +163,22 @@ public class Table {
     public void setCell(String cellPosition, ExpressionTree parsedTree) {
         if (data.get(toRow(cellPosition)) != null
                 && data.get(toRow(cellPosition)).get(toCol(cellPosition)) != null) {
-            getCell(cellPosition).setExpression(parsedTree);
+            Cell c = getCell(cellPosition);
+            c.setExpression(parsedTree);
+            fixWidth(c);
         } else {
             Cell c = new Cell(cellPosition, parsedTree);
             this.putCell(c);
         }
+    }
+
+    private void fixWidth(Cell c) {
+        columnWidth.put(
+                c.getCol(),
+                c.toString().length() + 4 > getColumnWidth(c.getCol())
+                        ? c.toString().length() + 4
+                        : getColumnWidth(c.getCol()
+                )
+        );
     }
 }
