@@ -135,7 +135,7 @@ public class Table {
     }
 
 
-    public Cell getCell(String position) {
+    Cell getCell(String position) {
         int row = toRow(position);
         int col = toCol(position);
         return this.data.get(row).get(col);
@@ -155,8 +155,21 @@ public class Table {
         return Integer.parseInt(position.split("^([A-Z]+)")[1]);
     }
 
+
+    /**
+     * Checks if cell exists on
+     *
+     * @param cellPosition if so - change that cell, setting
+     * @param parsedTree   to that cell,
+     *                     if not - create new cell and put it in the map
+     */
     public void setCell(String cellPosition, ExpressionTree parsedTree) {
-        Cell c = new Cell(cellPosition, parsedTree.getValue().doubleValue());
-        this.putCell(c);
+        if (data.get(toRow(cellPosition)) != null
+                && data.get(toRow(cellPosition)).get(toCol(cellPosition)) != null) {
+            getCell(cellPosition).setExpression(parsedTree);
+        } else {
+            Cell c = new Cell(cellPosition, parsedTree);
+            this.putCell(c);
+        }
     }
 }

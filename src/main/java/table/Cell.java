@@ -1,12 +1,11 @@
 package table;
 
-import lombok.Data;
+import expression.ExpressionTree;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 public class Cell {
     private static final String ERROR_STATE = "Error";
     private static final String INITIALIZED_STATE = "Initialized";
@@ -17,6 +16,7 @@ public class Cell {
     private int row;
     private int col;
     private BigDecimal value;
+    private ExpressionTree expression;
 
     /**
      * Support multiple dependencies for each node:
@@ -59,6 +59,14 @@ public class Cell {
         this.col = parseCol(position);
     }
 
+    Cell(String position, ExpressionTree value) {
+        this.position = position;
+        this.value = value.getValue();
+        this.row = parseRow(position);
+        this.col = parseCol(position);
+        this.expression = value;
+    }
+
     public static boolean isCellRefference(String input) {
         return input.matches("");
     }
@@ -95,6 +103,40 @@ public class Cell {
 
     @Override
     public String toString() {
-        return value == null ? content : value.toString();
+        if (value == null) {
+            if (content == null) {
+                return expression.getValue().stripTrailingZeros().toPlainString();
+            }
+            return content;
+        }
+        return value.stripTrailingZeros().toPlainString();
+    }
+
+    public ExpressionTree getExpression() {
+        return expression;
+    }
+
+    public void setExpression(ExpressionTree expression) {
+        this.expression = expression;
+    }
+
+    int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public String getPosition() {
+        return position;
     }
 }

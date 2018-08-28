@@ -47,7 +47,9 @@ public class Application {
     }
 
     private static void processEntry() {
-        String[] parts = lastInput.split("=");
-        myTable.setCell(parts[0].trim(), ExpressionParser.parse(parts[1]));
+        if (!lastInput.equals("")) {
+            String[] parts = lastInput.split("=");
+            myTable.setCell(parts[0].trim(), ExpressionParser.parse(parts[1]));
+        }
     }
 }
