@@ -15,4 +15,9 @@ public class ExpressionTree implements Node {
                 : root.getValue().setScale(6, RoundingMode.HALF_UP);
     }
 
+    @Override
+    public String getExpression() {
+        return root.getExpression();
+    }
+
 }

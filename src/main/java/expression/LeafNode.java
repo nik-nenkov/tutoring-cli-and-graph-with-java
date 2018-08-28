@@ -15,7 +15,12 @@ class LeafNode implements Node {
 
     @Override
     public BigDecimal getValue() {
-        return value == null ? BigDecimal.ZERO : value.setScale(6, RoundingMode.HALF_UP);
+        return value == null ? BigDecimal.ZERO : value;
+    }
+
+    @Override
+    public String getExpression() {
+        return value.setScale(2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
     }
 
 }

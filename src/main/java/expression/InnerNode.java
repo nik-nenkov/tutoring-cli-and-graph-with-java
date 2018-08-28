@@ -19,6 +19,27 @@ class InnerNode implements Node {
         return operation.calculate(a, b).setScale(6, RoundingMode.HALF_UP);
     }
 
+    @Override
+    public String getExpression() {
+        StringBuilder sb = new StringBuilder();
+
+        if (leftNode.getClass().equals(ExpressionTree.class)) {
+            sb.append("(").append(leftNode.getExpression()).append(")");
+        } else {
+            sb.append(leftNode.getExpression());
+        }
+
+        sb.append(operation.getOperator());
+
+        if (rightNode.getClass().equals(ExpressionTree.class)) {
+            sb.append("(").append(rightNode.getExpression()).append(")");
+        } else {
+            sb.append(rightNode.getExpression());
+        }
+
+        return sb.toString();
+    }
+
     void setRightNode(Node rightNode) {
         this.rightNode = rightNode;
     }

@@ -1,6 +1,9 @@
 package expression;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
+
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.security.InvalidParameterException;
 
 import static java.math.RoundingMode.HALF_UP;
@@ -13,8 +16,10 @@ public enum Operation {
     Exponentiation("^");
 
     private final Integer priority;
+    private final String operator;
 
     Operation(String s) {
+        operator = s;
         switch (s) {
             case "+":
                 priority = 0;
@@ -63,7 +68,11 @@ public enum Operation {
             case Multiplication:
                 return a.multiply(b);
             default:
-                return BigDecimal.valueOf(Math.pow(a.doubleValue(), b.doubleValue()));
+                return BigDecimalMath.pow(a, b, new MathContext(10));
         }
+    }
+
+    public String getOperator() {
+        return operator;
     }
 }

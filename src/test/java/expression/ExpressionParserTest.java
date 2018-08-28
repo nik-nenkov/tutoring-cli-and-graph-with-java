@@ -33,7 +33,6 @@ class ExpressionParserTest {
                 "" +
                 "" +
                 "2 * 3 + 5");
-
         assertEquals(BigDecimal.valueOf(51).setScale(6, HALF_UP), et.getValue());
     }
 
