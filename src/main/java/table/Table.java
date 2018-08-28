@@ -20,12 +20,20 @@ public class Table {
         numCols = c;
     }
 
-    private int decideWidth(int column) {
-        return columnWidth.get(column) == null ? DEFAULT_COLUMN_WIDTH : columnWidth.get(column);
-    }
-
     public Table() {
         this(0, 0);
+    }
+
+    private static String stringOfIdenticalSymbols(int length, String symbol) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            sb.append(symbol);
+        }
+        return sb.toString();
+    }
+
+    private int decideWidth(int column) {
+        return columnWidth.get(column) == null ? DEFAULT_COLUMN_WIDTH : columnWidth.get(column);
     }
 
     void putCell(Cell c) {
@@ -44,7 +52,9 @@ public class Table {
 
     public String toPrint() {
 
-        if(data.size()==0){return "\nEmpty table!\n";}
+        if (data.size() == 0) {
+            return "\nEmpty table!\n";
+        }
 
         StringBuilder tableToPrint = new StringBuilder("\n   ||");
 
@@ -120,13 +130,10 @@ public class Table {
         return represent.toString();
     }
 
-    private static String stringOfIdenticalSymbols(int length, String symbol) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            sb.append(symbol);
-        }
-        return sb.toString();
+    private int getColumnWidth(int column) {
+        return columnWidth.get(column) == null ? DEFAULT_COLUMN_WIDTH : columnWidth.get(column);
     }
+
 
     public Cell getCell(String position) {
         int row = toRow(position);
@@ -146,10 +153,6 @@ public class Table {
 
     private int toCol(String position) {
         return Integer.parseInt(position.split("^([A-Z]+)")[1]);
-    }
-
-    private int getColumnWidth(int column) {
-        return columnWidth.get(column) == null ? DEFAULT_COLUMN_WIDTH : columnWidth.get(column);
     }
 
     public void setCell(String cellPosition, ExpressionTree parsedTree) {

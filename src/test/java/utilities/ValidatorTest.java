@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.security.InvalidParameterException;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static utilities.Validator.extractTheThingFromInsideTheBrackets;
-import static utilities.Validator.isValidCellPosition;
+import static utilities.Validator.*;
 
 class ValidatorTest {
 
@@ -64,6 +63,10 @@ class ValidatorTest {
     }
 
 
+    @Test
+    void invalidOrderOfBrackets() {
+        assertFalse(hasValidOrderOfBrackets("7823+(-43/23-9)-11)+5"));
+    }
 
 
 

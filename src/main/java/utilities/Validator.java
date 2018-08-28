@@ -13,14 +13,6 @@ public final class Validator {
                 .replace(" ", "");
     }
 
-    static boolean isValidOperator(String input) {
-        return input.matches("^" + VALID_OPERATOR_PATTERN + "$");
-    }
-
-    static boolean isValidDecimal(String input) {
-        return input.matches("^" + VALID_DECIMAL_PATTERN + "$");
-    }
-
     public static String[] extractDecimals(String input) {
         return input.split(VALID_DECIMAL_PATTERN);
     }
@@ -30,20 +22,8 @@ public final class Validator {
     }
 
 
-
-
-
-    private static final String VALID_NUMBER_PATTERN =
-            "([1-9]+[0-9]*\\.?[0-9]*)";
-    private static final String VALID_NUMBER_OR_BRACKET_PATTERN =
-            "([1-9]+[0-9]*\\.?[0-9]*)|([(]+)|([)]+)";
-    private static final String SINGLE_BRACKETS_CLOSED =
-            "^[(]([a-zA-Z0-9])+[)]$";
     private static final String CELL_POSITION_PATTERN =
             "^([A-Z]{1,6})([1-9])([0-9]{0,9})$";
-
-    private static final String OPERATION_PATTERN =
-            "([+\\-/*^])";
 
     private static final String EXPRESSION_PATTERN =
             "^(((([A-Z]{1,6})([1-9])([0-9]{0,9}))|" +
@@ -56,23 +36,6 @@ public final class Validator {
 
     static boolean isValidExpression(String expression) {
         return expression.matches(EXPRESSION_PATTERN);
-    }
-
-    private static boolean isSingleBracketsClosed(String input) {
-        return input.matches(SINGLE_BRACKETS_CLOSED);
-    }
-
-
-    static boolean isValidOperation(String candidate) {
-        return candidate.matches(OPERATION_PATTERN);
-    }
-
-    static boolean isValidNumber(String candidate) {
-        return candidate.matches(VALID_NUMBER_PATTERN);
-    }
-
-    static boolean isValidNumberOrBracket(String candidate) {
-        return candidate.matches(VALID_NUMBER_OR_BRACKET_PATTERN);
     }
 
     static String extractTheThingFromInsideTheBrackets(String input) {
@@ -114,7 +77,7 @@ public final class Validator {
         return input.substring(start, end);
     }
 
-    private static boolean hasValidOrderOfBrackets(String input) {
+    static boolean hasValidOrderOfBrackets(String input) {
         int counter = 0;
         for (int i = 0; i < input.length(); i++) {
             counter += checkIfCharacterIsBracket(input.charAt(i));

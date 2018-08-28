@@ -59,15 +59,15 @@ public class Cell {
         this.col = parseCol(position);
     }
 
+    public static boolean isCellRefference(String input) {
+        return input.matches("");
+    }
+
     /**
-     *   Recalculating only whats relevant(not everything):
+     * Recalculating only whats relevant(not everything):
      */
     private void recalculate() {
         boolean response = notifyObservers();
-    }
-
-    public static boolean isCellRefference(String input) {
-        return input.matches("");
     }
 
     private int parseRow(String position) {
@@ -85,7 +85,7 @@ public class Cell {
     }
 
     /**
-     *   Getters and setters:
+     * Getters and setters:
      */
 
     private boolean notifyObservers() {

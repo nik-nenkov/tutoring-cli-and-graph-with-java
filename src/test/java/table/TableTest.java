@@ -70,7 +70,7 @@ class TableTest {
     @Test
     void toPrintEmptyTable() {
         Table t = new Table();
-        assertEquals("\nEmpty table!\n",t.toPrint());
+        assertEquals("\nEmpty table!\n", t.toPrint());
     }
 
     @Test
