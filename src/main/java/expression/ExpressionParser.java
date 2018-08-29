@@ -1,8 +1,6 @@
 package expression;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static utilities.Validator.*;
@@ -10,6 +8,7 @@ import static utilities.Validator.*;
 public class ExpressionParser {
 
     public static ExpressionTree parse(String input1) {
+        Set<Node> treeNodes = new HashSet<>();
         String input = removeEmptySpaces(input1);
         List<Node> leafNodes = new ArrayList<>();
         List<InnerNode> innerNodes = new ArrayList<>();
@@ -39,45 +38,56 @@ public class ExpressionParser {
                     }
                 }
             }
-            compute(leafNodes, innerNodes);
-            return new ExpressionTree(leafNodes.get(0));
+            compute(treeNodes, leafNodes, innerNodes);
+            return new ExpressionTree(leafNodes.get(0), treeNodes);
         } else {
             return parseExpressionTreeFromString(input);
         }
     }
 
     private static ExpressionTree parseExpressionTreeFromString(String input) {
+        Set<Node> treeNodes = new HashSet<>();
         List<Node> leafNodes = new ArrayList<>();
         List<InnerNode> innerNodes = new ArrayList<>();
         appendArraysWithExpression(input, leafNodes, innerNodes);
-        compute(leafNodes, innerNodes);
-        return new ExpressionTree(leafNodes.get(0));
+        compute(treeNodes, leafNodes, innerNodes);
+        return new ExpressionTree(leafNodes.get(0), treeNodes);
     }
 
-    private static void compute(List<Node> leafNodes, List<InnerNode> innerNodes) {
+    private static void compute(Set<Node> treeNodes, List<Node> leafNodes, List<InnerNode> innerNodes) {
         int priorityLevel = 4;
-        applyFromRightToLeft(leafNodes, innerNodes, priorityLevel);
+        treeNodes.addAll(
+                applyFromRightToLeft(leafNodes, innerNodes, priorityLevel)
+        );
         priorityLevel--;
         while (priorityLevel >= 0) {
-            applyFromLeftToRight(leafNodes, innerNodes, priorityLevel);
+            treeNodes.addAll(
+                    applyFromLeftToRight(leafNodes, innerNodes, priorityLevel)
+            );
             priorityLevel--;
         }
     }
 
-    private static void applyFromRightToLeft(List<Node> leafNodes, List<InnerNode> innerNodes, int priorityLevel) {
+    private static Set<Node> applyFromRightToLeft(List<Node> leafNodes, List<InnerNode> innerNodes, int priorityLevel) {
+        Set<Node> addedNodes = new HashSet<>();
         for (int i = innerNodes.size() - 1; i >= 0; i--) {
             if (innerNodes.get(i).getPriority() == priorityLevel) {
                 innerNodes.get(i).setLeftNode(leafNodes.get(i));
                 innerNodes.get(i).setRightNode(leafNodes.get(i + 1));
+
+                addedNodes.add(leafNodes.get(i + 1));
+                addedNodes.add(innerNodes.get(i));
 
                 leafNodes.set(i, innerNodes.get(i));
                 leafNodes.remove(i + 1);
                 innerNodes.remove(i);
             }
         }
+        return addedNodes;
     }
 
-    private static void applyFromLeftToRight(List<Node> leafNodes, List<InnerNode> innerNodes, int priorityLevel) {
+    private static Set<Node> applyFromLeftToRight(List<Node> leafNodes, List<InnerNode> innerNodes, int priorityLevel) {
+        Set<Node> addedNodes = new HashSet<>();
         for (int i = 0; i < innerNodes.size(); i++) {
             boolean changeWasMade;
             do {
@@ -85,6 +95,9 @@ public class ExpressionParser {
                 if (innerNodes.get(i).getPriority() == priorityLevel) {
                     innerNodes.get(i).setLeftNode(leafNodes.get(i));
                     innerNodes.get(i).setRightNode(leafNodes.get(i + 1));
+
+                    addedNodes.add(leafNodes.get(i));
+                    addedNodes.add(innerNodes.get(i));
 
                     leafNodes.set(i + 1, innerNodes.get(i));
                     leafNodes.remove(i);
@@ -95,6 +108,7 @@ public class ExpressionParser {
             }
             while (changeWasMade && i < innerNodes.size());
         }
+        return addedNodes;
     }
 
     private static void appendArraysWithExpression(String input, List<Node> leafNodes, List<InnerNode> innerNodes) {

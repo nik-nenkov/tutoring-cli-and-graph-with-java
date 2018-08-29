@@ -1,7 +1,9 @@
 package expression;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+
+import static java.math.BigDecimal.ZERO;
+import static java.math.RoundingMode.HALF_UP;
 
 class InnerNode implements Node {
     private Node leftNode;
@@ -14,9 +16,9 @@ class InnerNode implements Node {
 
     @Override
     public BigDecimal getValue() {
-        BigDecimal a = leftNode == null ? BigDecimal.ZERO : leftNode.getValue();
-        BigDecimal b = rightNode == null ? BigDecimal.ZERO : rightNode.getValue();
-        return operation.calculate(a, b).setScale(6, RoundingMode.HALF_UP);
+        BigDecimal a = leftNode == null ? ZERO : leftNode.getValue();
+        BigDecimal b = rightNode == null ? ZERO : rightNode.getValue();
+        return operation.calculate(a, b).setScale(6, HALF_UP);
     }
 
     @Override

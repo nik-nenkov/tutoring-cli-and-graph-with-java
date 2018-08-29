@@ -17,6 +17,7 @@ public enum Operation {
 
     private final Integer priority;
     private final String operator;
+    private static final MathContext mc = new MathContext(10, HALF_UP);
 
     Operation(String s) {
         operator = s;
@@ -60,15 +61,15 @@ public enum Operation {
     public BigDecimal calculate(BigDecimal a, BigDecimal b) {
         switch (this) {
             case Division:
-                return a.divide(b, HALF_UP);
+                return a.divide(b, mc);
             case Subtraction:
-                return a.subtract(b);
+                return a.subtract(b, mc);
             case Addition:
-                return a.add(b);
+                return a.add(b, mc);
             case Multiplication:
-                return a.multiply(b);
+                return a.multiply(b, mc);
             default:
-                return BigDecimalMath.pow(a, b, new MathContext(10));
+                return BigDecimalMath.pow(a, b, mc);
         }
     }
 

@@ -1,26 +1,30 @@
 package expression;
 
-import table.Cell;
-
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+
+import static java.lang.Double.parseDouble;
+import static java.math.BigDecimal.ZERO;
+import static java.math.BigDecimal.valueOf;
+import static java.math.RoundingMode.HALF_UP;
 
 class LeafNode implements Node {
     private BigDecimal value;
-    private Cell cellReference;
+
+//    TODO make it possible to have Cell instead of number
+//    private Cell cellReference;
 
     LeafNode(String initial) {
-        value = BigDecimal.valueOf(Double.parseDouble(initial)).setScale(6, RoundingMode.HALF_UP);
+        value = valueOf(parseDouble(initial)).setScale(10, HALF_UP);
     }
 
     @Override
     public BigDecimal getValue() {
-        return value == null ? BigDecimal.ZERO : value;
+        return value == null ? ZERO : value;
     }
 
     @Override
     public String getExpression() {
-        return value.setScale(2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+        return value.setScale(3, HALF_UP).stripTrailingZeros().toPlainString();
     }
 
 }

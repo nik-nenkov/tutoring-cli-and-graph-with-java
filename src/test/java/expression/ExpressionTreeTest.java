@@ -21,7 +21,7 @@ class ExpressionTreeTest {
     @Test
     void getExpression() {
         assertEquals(
-                "((5-4.5^3)/4*7^1.5-5)/6/2*7+3*320.58/(8/3)^2^2*3.57+5",
+                "((5-4.5^3)/4*7^1.5-5)/6/2*7+3*320.576/(8/3)^2^2*3.565+5",
                 parse("((5 - 4.5^3)/4*7^1.5-5)/6/2*7 + 3 * 320.576/(8 / 3) ^ 2 ^ 2 * 3.565 + 5")
                         .getExpression()
         );
@@ -45,5 +45,13 @@ class ExpressionTreeTest {
                         BigDecimal.valueOf(3.14),
                         new MathContext(20)).setScale(9, RoundingMode.HALF_UP)
         );
+    }
+
+    @Test
+    void toSeeIfTreeContainsAllNodesInItsPrivateSet() {
+        //TODO one extra node is in the Set. Please remove it!
+        ExpressionTree et = parse("5-8/(3+1)");
+        System.out.println(et.getValue() + "\n");
+        et.getNodes().forEach(e -> System.out.println(e.getValue()));
     }
 }

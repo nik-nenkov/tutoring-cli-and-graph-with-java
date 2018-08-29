@@ -2,11 +2,16 @@ package expression;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Set;
 
 public class ExpressionTree implements Node {
-    private Node root;
-    ExpressionTree(Node n) {
-        root = n;
+
+    private final Node root;
+    private final Set<Node> nodes;
+
+    ExpressionTree(Node root, Set<Node> nodes) {
+        this.root = root;
+        this.nodes = nodes;
     }
 
     @Override
@@ -20,4 +25,11 @@ public class ExpressionTree implements Node {
         return root.getExpression();
     }
 
+    public Set<Node> getNodes() {
+        return nodes;
+    }
+
+    public Node getRoot() {
+        return root;
+    }
 }
