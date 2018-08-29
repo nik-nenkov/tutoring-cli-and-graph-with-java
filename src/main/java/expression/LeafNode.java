@@ -1,6 +1,7 @@
 package expression;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import static java.lang.Double.parseDouble;
 import static java.math.BigDecimal.ZERO;
@@ -13,7 +14,7 @@ class LeafNode implements Node {
 //    private Cell cellReference;
 
     LeafNode(String initial) {
-        value = new BigDecimal(parseDouble(initial));
+        value = new BigDecimal(parseDouble(initial), new MathContext(15, HALF_UP));
     }
 
     @Override

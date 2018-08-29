@@ -78,6 +78,12 @@ class ExpressionParserTest {
     }
 
     @Test
+    void harcoreTestComparedToWolframAlpha() {
+        assertEquals("-414.66391088112309739572120387982747767914956076884614386727950245738711057117094990125",
+                parse("5 - 4.5^3/4*7^1.5-5/6/2*7 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5").getValue().toString());
+    }
+
+    @Test
     void insaneTestWithBrackets() {
         assertEquals(BigDecimal.valueOf(2.405320814),
                 parse("3 - 5 / ( 6 + 3 - 5 / ( 6 + 3 - 5 / ( 6 + 3 ) ) )").getResult());

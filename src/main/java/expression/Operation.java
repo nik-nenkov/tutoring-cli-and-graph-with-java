@@ -17,7 +17,7 @@ public enum Operation {
     private final Integer priority;
     private final String operator;
 
-    private final MathContext mc = new MathContext(20, RoundingMode.FLOOR);
+    private final MathContext mc = new MathContext(80, RoundingMode.FLOOR);
 
     Operation(String s) {
         operator = s;
