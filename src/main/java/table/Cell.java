@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static utilities.Converter.toCol;
+import static utilities.Converter.toRow;
+
 public class Cell {
     private static final String ERROR_STATE = "Error";
     private static final String INITIALIZED_STATE = "Initialized";
@@ -41,34 +44,30 @@ public class Cell {
     public Cell(String position, String content) {
         this.position = position;
         this.content = content;
-        this.row = parseRow(position);
-        this.col = parseCol(position);
+        this.row = toRow(position);
+        this.col = toCol(position);
     }
 
     Cell(String position, long value) {
         this.position = position;
         this.value = BigDecimal.valueOf(value);
-        this.row = parseRow(position);
-        this.col = parseCol(position);
+        this.row = toRow(position);
+        this.col = toCol(position);
     }
 
     Cell(String position, double value) {
         this.position = position;
         this.value = BigDecimal.valueOf(value);
-        this.row = parseRow(position);
-        this.col = parseCol(position);
+        this.row = toRow(position);
+        this.col = toCol(position);
     }
 
     Cell(String position, ExpressionTree value) {
         this.position = position;
         this.value = value.getValue();
-        this.row = parseRow(position);
-        this.col = parseCol(position);
+        this.row = toRow(position);
+        this.col = toCol(position);
         this.expression = value;
-    }
-
-    public static boolean isCellRefference(String input) {
-        return input.matches("");
     }
 
     /**
@@ -77,24 +76,6 @@ public class Cell {
     private void recalculate() {
         boolean response = notifyObservers();
     }
-
-    private int parseRow(String position) {
-        return Integer.parseInt(position.split("^([A-Z]+)")[1]);
-    }
-
-    private int parseCol(String position) {
-        String alphabeticalColumn = position.split("([1-9]+)([0-9]*)$")[0];
-        int number = 0;
-        for (int i = alphabeticalColumn.length() - 1; i >= 0; i--) {
-            number = number * 26;
-            number = number + ((int) alphabeticalColumn.charAt(i) - 64);
-        }
-        return number;
-    }
-
-    /**
-     * Getters and setters:
-     */
 
     private boolean notifyObservers() {
         observers.forEach(Cell::notify);
@@ -111,6 +92,11 @@ public class Cell {
 
         return " ";
     }
+
+
+    /**
+     * Getters and setters:
+     */
 
     public ExpressionTree getExpression() {
         return expression;

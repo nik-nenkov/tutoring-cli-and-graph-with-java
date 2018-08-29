@@ -5,6 +5,8 @@ import expression.ExpressionTree;
 import java.util.HashMap;
 import java.util.Map;
 
+import static utilities.Converter.*;
+
 public class Table {
 
     private final Map<Integer, Map<Integer, Cell>> data;
@@ -116,19 +118,9 @@ public class Table {
         return " ";
     }
 
-    private String toAlphabetical(int i) {
-        StringBuilder represent = new StringBuilder();
-        while (i != 0) {
-            represent.append(Character.toString((char) ((i % 26) + 64)));
-            i /= 26;
-        }
-        return represent.toString();
-    }
-
     private int getColumnWidth(int column) {
         return columnWidth.get(column) == null ? DEFAULT_COLUMN_WIDTH : columnWidth.get(column);
     }
-
 
     Cell getCell(String position) {
         int row = toRow(position);
@@ -136,22 +128,6 @@ public class Table {
         return this.data.get(row).get(col);
     }
 
-    private int toRow(String position) {
-
-        return Integer.parseInt(position.split("^([A-Z]+)")[1]);
-
-
-    }
-
-    private int toCol(String position) {
-        char[] alphabetical = position.split("([1-9]+)([0-9]*)$")[0].toCharArray();
-        int val = 0;
-        for (char letter : alphabetical) {
-            val *= 26;
-            val += ((int) letter - 64);
-        }
-        return val;
-    }
 
     /**
      * Checks if cell exists on

@@ -87,4 +87,8 @@ public final class Validator {
         }
         return counter == 0;
     }
+
+//    public static boolean isCellRefference(String input) {
+//        return input.matches(CELL_POSITION_PATTERN);
+//    }
 }

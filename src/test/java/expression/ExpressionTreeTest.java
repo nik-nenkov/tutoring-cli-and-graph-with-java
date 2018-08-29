@@ -49,8 +49,7 @@ class ExpressionTreeTest {
 
     @Test
     void toSeeIfTreeContainsAllNodesInItsPrivateSet() {
-        //TODO one extra node is in the Set. Please remove it!
-        ExpressionTree et = parse("5-100/(3+7)");
+        ExpressionTree et = parse("5 - 100 / (3+7-(88/11))");
         System.out.println(et.getValue() + "\n");
         et.getNodes().forEach(e -> System.out.println(e.getValue()));
     }

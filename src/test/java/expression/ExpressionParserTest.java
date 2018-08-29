@@ -78,9 +78,15 @@ class ExpressionParserTest {
     }
 
     @Test
-    void harcoreTestComparedToWolframAlpha() {
+    void hardcoreTestComparedToWolframAlpha() {
         assertEquals("-414.66391088112309739572120387982747767914956076884614386727950245738711057117094990125",
                 parse("5 - 4.5^3/4*7^1.5-5/6/2*7 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5").getValue().toString());
+    }
+
+    @Test
+    void hardcoreTestComparedToWolframAlphaTwo() {
+        assertEquals(BigDecimal.valueOf(-414.663910881),
+                parse("5 - 4.5^3/4*7^1.5-5/6/2*7 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5").getResult());
     }
 
     @Test
@@ -93,6 +99,12 @@ class ExpressionParserTest {
     void insaneTestWithBracketsMultiple() {
         assertEquals(BigDecimal.valueOf(-0.145833333),
                 parse("(3 - 5 )/ (( 6 / ( 2 * 7 ) + 3 ) * 1) / 4").getResult());
+    }
+
+    @Test
+    void anotherInsaneExpression() {
+        assertEquals(BigDecimal.valueOf(-20608009.9888491850195663326),
+                parse("(19291232-3.67787^1.345^6.78/13.3213)-6.786324*(8.21232+144.4214)^3.1+0.1 ").getResult());
     }
 
     @Test
