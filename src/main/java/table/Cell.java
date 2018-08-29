@@ -103,7 +103,7 @@ public class Cell {
 
     @Override
     public String toString() {
-        if (expression != null) return expression.getValue().stripTrailingZeros().toPlainString();
+        if (expression != null) return expression.getResult().stripTrailingZeros().toPlainString();
 
         if (value != null) return value.stripTrailingZeros().toPlainString();
 

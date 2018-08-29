@@ -30,27 +30,27 @@ class ExpressionTreeTest {
 
     @Test
     void precision() {
-        assertEquals(BigDecimal.valueOf(252.294341633).setScale(3, RoundingMode.HALF_UP),
+        assertEquals(BigDecimal.valueOf(252.294341633),
                 parse("((5-4.5^3)/4*7^1.5-5)/6/2*7+3*320.58/(8/3)^2*3.57+5")
-                        .getValue().setScale(3, RoundingMode.HALF_UP)
+                        .getResult()
         );
     }
 
     @Test
     void bigMathPrecision() {
         assertEquals(
-                BigDecimal.valueOf(404.61399).setScale(9, RoundingMode.HALF_UP),
+                BigDecimal.valueOf(404.61399),
                 BigDecimalMath.pow(
                         BigDecimal.valueOf(6.765),
                         BigDecimal.valueOf(3.14),
-                        new MathContext(20)).setScale(9, RoundingMode.HALF_UP)
+                        new MathContext(20)).setScale(5, RoundingMode.HALF_UP)
         );
     }
 
     @Test
     void toSeeIfTreeContainsAllNodesInItsPrivateSet() {
         //TODO one extra node is in the Set. Please remove it!
-        ExpressionTree et = parse("5-8/(3+1)");
+        ExpressionTree et = parse("5-100/(3+7)");
         System.out.println(et.getValue() + "\n");
         et.getNodes().forEach(e -> System.out.println(e.getValue()));
     }

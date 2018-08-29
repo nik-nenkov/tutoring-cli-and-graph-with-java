@@ -4,9 +4,8 @@ import ch.obermuhlner.math.big.BigDecimalMath;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.security.InvalidParameterException;
-
-import static java.math.RoundingMode.HALF_UP;
 
 public enum Operation {
     Division("/"),
@@ -17,7 +16,8 @@ public enum Operation {
 
     private final Integer priority;
     private final String operator;
-    private static final MathContext mc = new MathContext(10, HALF_UP);
+
+    private final MathContext mc = new MathContext(20, RoundingMode.FLOOR);
 
     Operation(String s) {
         operator = s;
@@ -63,11 +63,11 @@ public enum Operation {
             case Division:
                 return a.divide(b, mc);
             case Subtraction:
-                return a.subtract(b, mc);
+                return a.subtract(b);
             case Addition:
-                return a.add(b, mc);
+                return a.add(b);
             case Multiplication:
-                return a.multiply(b, mc);
+                return a.multiply(b);
             default:
                 return BigDecimalMath.pow(a, b, mc);
         }

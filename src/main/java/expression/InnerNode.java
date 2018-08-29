@@ -3,7 +3,6 @@ package expression;
 import java.math.BigDecimal;
 
 import static java.math.BigDecimal.ZERO;
-import static java.math.RoundingMode.HALF_UP;
 
 class InnerNode implements Node {
     private Node leftNode;
@@ -18,7 +17,7 @@ class InnerNode implements Node {
     public BigDecimal getValue() {
         BigDecimal a = leftNode == null ? ZERO : leftNode.getValue();
         BigDecimal b = rightNode == null ? ZERO : rightNode.getValue();
-        return operation.calculate(a, b).setScale(6, HALF_UP);
+        return operation.calculate(a, b);
     }
 
     @Override

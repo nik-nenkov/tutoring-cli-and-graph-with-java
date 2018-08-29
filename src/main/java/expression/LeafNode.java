@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import static java.lang.Double.parseDouble;
 import static java.math.BigDecimal.ZERO;
-import static java.math.BigDecimal.valueOf;
 import static java.math.RoundingMode.HALF_UP;
 
 class LeafNode implements Node {
@@ -14,7 +13,7 @@ class LeafNode implements Node {
 //    private Cell cellReference;
 
     LeafNode(String initial) {
-        value = valueOf(parseDouble(initial)).setScale(10, HALF_UP);
+        value = new BigDecimal(parseDouble(initial));
     }
 
     @Override

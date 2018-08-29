@@ -4,6 +4,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Set;
 
+
+/**
+ * Notice that getValue() returns BigDecimal value with maximum accuracy
+ * If you wish to print a result - please use the getResult() method
+ */
 public class ExpressionTree implements Node {
 
     private final Node root;
@@ -17,7 +22,7 @@ public class ExpressionTree implements Node {
     @Override
     public BigDecimal getValue() {
         return root == null ? BigDecimal.ZERO
-                : root.getValue().setScale(6, RoundingMode.HALF_UP);
+                : root.getValue();
     }
 
     @Override
@@ -25,11 +30,16 @@ public class ExpressionTree implements Node {
         return root.getExpression();
     }
 
-    public Set<Node> getNodes() {
+    Set<Node> getNodes() {
         return nodes;
     }
 
-    public Node getRoot() {
-        return root;
+    public BigDecimal getResult() {
+        BigDecimal result = root.getValue();
+
+        if (result.remainder(BigDecimal.ONE).equals(BigDecimal.ZERO)) {
+            return result.setScale(0, RoundingMode.HALF_UP);
+        }
+        return root.getValue().setScale(9, RoundingMode.HALF_UP).stripTrailingZeros();
     }
 }
