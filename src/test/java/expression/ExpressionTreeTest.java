@@ -50,10 +50,4 @@ class ExpressionTreeTest {
         );
     }
 
-    @Test
-    void toSeeIfTreeContainsAllNodesInItsPrivateSet() {
-        ExpressionTree et = xps.parse("5 - 100 / (3+7-(88/11))");
-        System.out.println(et.getValue() + "\n");
-        et.getNodes().forEach(e -> System.out.println(e.getValue()));
-    }
 }

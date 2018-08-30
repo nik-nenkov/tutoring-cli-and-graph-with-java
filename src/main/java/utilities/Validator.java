@@ -3,10 +3,10 @@ package utilities;
 import java.security.InvalidParameterException;
 
 public final class Validator {
-    private static final String VALID_OPERATOR_PATTERN = "([+\\-*/^])";
-    private static final String VALID_DECIMAL_PATTERN = "(([1-9][0-9]*)|([0]))([.][0-9]{1,8})?";
+    private static final String OPERATOR_PATTERN = "([+\\-*/^])";
+    private static final String DECIMAL_PATTERN = "(([1-9][0-9]*)|([0]))([.][0-9]{1,8})?";
     private static final String CELL_POSITION_PATTERN = "([A-Z]{1,6})([1-9])([0-9]{0,9})";
-    private static final String VALID_OPERAND_PATTERN = "(" + VALID_DECIMAL_PATTERN + ")|(" + CELL_POSITION_PATTERN + ")";
+    private static final String OPERAND_PATTERN = "(" + DECIMAL_PATTERN + ")|(" + CELL_POSITION_PATTERN + ")";
 
     public static String removeEmptySpaces(String input) {
         return input.trim()
@@ -16,30 +16,24 @@ public final class Validator {
     }
 
     public static String[] extractOperands(String input) {
-        return input.split(VALID_OPERATOR_PATTERN);
+        return input.split(OPERATOR_PATTERN);
     }
 
     @Deprecated
     public static String[] extractDecimals(String input) {
-        return input.split(VALID_DECIMAL_PATTERN);
+        return input.split(DECIMAL_PATTERN);
     }
 
     public static String[] extractOperators(String input) {
-        return input.split(VALID_OPERAND_PATTERN);
+        return input.split(OPERAND_PATTERN);
     }
-
-
-    private static final String EXPRESSION_PATTERN =
-            "^(((([A-Z]{1,6})([1-9])([0-9]{0,9}))|" +
-                    "(([1-9]+[0-9]*)?(\\.[0-9]+)?))([\\s]*)([+\\-/*^])?)*$";
-
 
     public static boolean isValidCellPosition(String position) {
         return position.matches(CELL_POSITION_PATTERN);
     }
 
-    static boolean isValidExpression(String expression) {
-        return expression.matches(EXPRESSION_PATTERN);
+    public static boolean isValidDecimal(String candidate) {
+        return candidate.matches(DECIMAL_PATTERN);
     }
 
     static String extractTheThingFromInsideTheBrackets(String input) {

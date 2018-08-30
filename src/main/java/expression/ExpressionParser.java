@@ -14,6 +14,50 @@ public class ExpressionParser {
         this.referenceTable = referenceTable;
     }
 
+    private static void compute(List<Node> leafNodes, List<InnerNode> innerNodes) {
+        int priorityLevel = 4;
+        applyFromRightToLeft(leafNodes, innerNodes, priorityLevel);
+        priorityLevel--;
+        while (priorityLevel >= 0) {
+            applyFromLeftToRight(leafNodes, innerNodes, priorityLevel);
+            priorityLevel--;
+        }
+    }
+
+    private static void applyFromRightToLeft(List<Node> leafNodes, List<InnerNode> innerNodes, int priorityLevel) {
+        for (int i = innerNodes.size() - 1; i >= 0; i--) {
+            if (innerNodes.get(i).getPriority() == priorityLevel) {
+                innerNodes.get(i).setLeftNode(leafNodes.get(i));
+                innerNodes.get(i).setRightNode(leafNodes.get(i + 1));
+
+                leafNodes.set(i, innerNodes.get(i));
+                leafNodes.remove(i + 1);
+                innerNodes.remove(i);
+            }
+        }
+    }
+
+    private static void applyFromLeftToRight(List<Node> leafNodes, List<InnerNode> innerNodes, int priorityLevel) {
+
+        for (int i = 0; i < innerNodes.size(); i++) {
+            boolean changeWasMade;
+            do {
+                changeWasMade = false;
+                if (innerNodes.get(i).getPriority() == priorityLevel) {
+                    innerNodes.get(i).setLeftNode(leafNodes.get(i));
+                    innerNodes.get(i).setRightNode(leafNodes.get(i + 1));
+
+                    leafNodes.set(i + 1, innerNodes.get(i));
+                    leafNodes.remove(i);
+                    innerNodes.remove(i);
+
+                    changeWasMade = true;
+                }
+            }
+            while (changeWasMade && i < innerNodes.size());
+        }
+    }
+
     public ExpressionTree parse(String rawInput) {
 
         String input = removeEmptySpaces(rawInput);
@@ -67,50 +111,6 @@ public class ExpressionParser {
 
         compute(leafNodes, innerNodes);
         return new ExpressionTree(leafNodes.get(0), treeNodes, referenceTable);
-    }
-
-    private static void compute(List<Node> leafNodes, List<InnerNode> innerNodes) {
-        int priorityLevel = 4;
-        applyFromRightToLeft(leafNodes, innerNodes, priorityLevel);
-        priorityLevel--;
-        while (priorityLevel >= 0) {
-            applyFromLeftToRight(leafNodes, innerNodes, priorityLevel);
-            priorityLevel--;
-        }
-    }
-
-    private static void applyFromRightToLeft(List<Node> leafNodes, List<InnerNode> innerNodes, int priorityLevel) {
-        for (int i = innerNodes.size() - 1; i >= 0; i--) {
-            if (innerNodes.get(i).getPriority() == priorityLevel) {
-                innerNodes.get(i).setLeftNode(leafNodes.get(i));
-                innerNodes.get(i).setRightNode(leafNodes.get(i + 1));
-
-                leafNodes.set(i, innerNodes.get(i));
-                leafNodes.remove(i + 1);
-                innerNodes.remove(i);
-            }
-        }
-    }
-
-    private static void applyFromLeftToRight(List<Node> leafNodes, List<InnerNode> innerNodes, int priorityLevel) {
-
-        for (int i = 0; i < innerNodes.size(); i++) {
-            boolean changeWasMade;
-            do {
-                changeWasMade = false;
-                if (innerNodes.get(i).getPriority() == priorityLevel) {
-                    innerNodes.get(i).setLeftNode(leafNodes.get(i));
-                    innerNodes.get(i).setRightNode(leafNodes.get(i + 1));
-
-                    leafNodes.set(i + 1, innerNodes.get(i));
-                    leafNodes.remove(i);
-                    innerNodes.remove(i);
-
-                    changeWasMade = true;
-                }
-            }
-            while (changeWasMade && i < innerNodes.size());
-        }
     }
 
     private void appendArraysWithExpression(String input, List<Node> leafNodes, List<InnerNode> innerNodes) {

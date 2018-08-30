@@ -16,9 +16,6 @@ class LeafNode implements Node {
     private final BigDecimal value;
     private final Cell cellReference;
 
-//    TODO make it possible to have Cell instead of number
-//    private Cell cellReference;
-
     LeafNode(String initial, Table tableToRefer) {
         if (isValidCellPosition(initial)) {
             this.isReference = true;
@@ -33,20 +30,26 @@ class LeafNode implements Node {
 
     @Override
     public BigDecimal getValue() {
+        if (isReference) {
+            return cellReference.getValue();
+        }
         return value == null ? ZERO : value;
     }
 
     @Override
     public String getExpression() {
+        if (isReference) {
+            return cellReference.getPosition();
+        }
         return value.setScale(3, HALF_UP).stripTrailingZeros().toPlainString();
     }
 
-    public Cell getCellReference() {
-        return cellReference;
-    }
-
-    public boolean isReference() {
-        return isReference;
-    }
+//    public Cell getCellReference() {
+//        return cellReference;
+//    }
+//
+//    public boolean isReference() {
+//        return isReference;
+//    }
 
 }

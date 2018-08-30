@@ -3,6 +3,7 @@ package table;
 import expression.ExpressionTree;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,22 @@ public class Cell {
     private String content;
     private int row;
     private int col;
+    private BigDecimal value;
+    private ExpressionTree expressionTree;
+    /**
+     * Support multiple dependencies for each node:
+     */
+    private List<Cell> dependencies;
+    /**
+     * Support multiple observers on each cell:
+     */
+    private List<Cell> observers = new ArrayList<>();
+    /**
+     * Handling of cell's states:
+     */
+    private boolean initialized = false;
+    private boolean hasError = false;
+    private String state = NOT_INITIALIZED_STATE;
 
     /**
      * Constructor:
@@ -28,30 +45,6 @@ public class Cell {
         this.content = content;
         this.row = toRow(position);
         this.col = toCol(position);
-    }
-
-    private BigDecimal value;
-    private ExpressionTree expression;
-
-    /**
-     * Support multiple dependencies for each node:
-     */
-    private List<Cell> dependencies;
-
-    /**
-     * Support multiple observers on each cell:
-     */
-    private List<Cell> observers = new ArrayList<>();
-
-    /**
-     * Handling of cell's states:
-     */
-    private boolean initialized = false;
-    private boolean hasError = false;
-    private String state = NOT_INITIALIZED_STATE;
-
-    public BigDecimal getValue() {
-        return value;
     }
 
     Cell(String position, long value) {
@@ -73,7 +66,17 @@ public class Cell {
         this.value = value.getValue();
         this.row = toRow(position);
         this.col = toCol(position);
-        this.expression = value;
+        this.expressionTree = value;
+    }
+
+    public BigDecimal getValue() {
+        return value;
+    }
+
+    void setValue(Double value) {
+        this.value = BigDecimal.valueOf(value);
+        this.expressionTree = null;
+        this.content = null;
     }
 
     /**
@@ -90,26 +93,36 @@ public class Cell {
 
     @Override
     public String toString() {
-        if (expression != null) return expression.getResult().stripTrailingZeros().toPlainString();
+        if (expressionTree != null)
+            return expressionTree
+                    .getResult()
+                    .setScale(6, RoundingMode.HALF_UP)
+                    .stripTrailingZeros()
+                    .toPlainString();
 
-        if (value != null) return value.stripTrailingZeros().toPlainString();
+        if (value != null)
+            return value
+                    .setScale(6, RoundingMode.HALF_UP)
+                    .stripTrailingZeros()
+                    .toPlainString();
 
         if (content != null) return content;
 
         return " ";
     }
 
-
     /**
      * Getters and setters:
      */
 
-    public ExpressionTree getExpression() {
-        return expression;
+    String getExpressionAsString() {
+        if (expressionTree != null) return expressionTree.getExpression();
+        if (value != null) return value.setScale(3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+        else return null;
     }
 
     public void setExpression(ExpressionTree expression) {
-        this.expression = expression;
+        this.expressionTree = expression;
     }
 
     int getCol() {
@@ -131,4 +144,5 @@ public class Cell {
     public String getPosition() {
         return position;
     }
+
 }

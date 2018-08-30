@@ -1,15 +1,15 @@
 //import expression.ExpressionParser;
 //import expression.exception.InvalidInputException;
 
-import expression.ExpressionParser;
 import table.Table;
 
 import java.util.Scanner;
 
+import static utilities.Validator.isValidDecimal;
+
 public class Application {
 
     private static final Table myTable = new Table();
-    private static final ExpressionParser xps = new ExpressionParser(myTable);
     private static final Scanner scan = new Scanner(System.in);
     private static final String APPLICATION_INFORMATION = "2018 <epam> IS AWESOME!";
     private static final String WELCOME_MESSAGE = "Try /info, /print, /exit or an expression";
@@ -50,7 +50,12 @@ public class Application {
     private static void processEntry() {
         if (!lastInput.equals("")) {
             String[] parts = lastInput.split("=");
-            myTable.setCell(parts[0].trim(), xps.parse(parts[1]));
+            if (isValidDecimal(parts[1].trim())) {
+                myTable.setCellByValue(
+                        parts[0].trim(),
+                        Double.parseDouble(parts[1].trim()));
+            }
+            myTable.setCellByExpression(parts[0].trim(), parts[1]);
         }
     }
 

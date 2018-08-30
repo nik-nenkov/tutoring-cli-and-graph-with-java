@@ -25,7 +25,7 @@ public final class Converter {
         return represent.toString();
     }
 
-//    public static String toCellReference(int row, int col){
-//        return ""+toAlphabetical(col)+row;
-//    }
+    public static String toCellReference(int row, int col) {
+        return "" + toAlphabetical(col) + row;
+    }
 }

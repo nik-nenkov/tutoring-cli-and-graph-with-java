@@ -35,16 +35,6 @@ class ValidatorTest {
     }
 
     @Test
-    void isValidExpression() {
-        assertTrue(Validator.isValidExpression("4 + 7.954"));
-    }
-
-    @Test
-    void isValidExpressionSecondTry() {
-        assertTrue(Validator.isValidExpression("4 + 7.954/983"));
-    }
-
-    @Test
     void toFindStringInsideBrackets() {
         assertEquals("SADS(DSAD)DASD(DASD)DSA",
                 Validator.extractTheThingFromInsideTheBrackets("dsadsad(SADS(DSAD)DASD(DASD)DSA)njkbhh"));

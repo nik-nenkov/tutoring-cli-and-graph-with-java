@@ -1,5 +1,6 @@
 package table;
 
+import expression.ExpressionParser;
 import expression.ExpressionTree;
 
 import java.util.HashMap;
@@ -128,7 +129,6 @@ public class Table {
         return this.data.get(row).get(col);
     }
 
-
     /**
      * Checks if cell exists on
      *
@@ -136,7 +136,7 @@ public class Table {
      * @param parsedTree   to that cell,
      *                     if not - create new cell and put it in the map
      */
-    public void setCell(String cellPosition, ExpressionTree parsedTree) {
+    private void setCell(String cellPosition, ExpressionTree parsedTree) {
         if (data.get(toRow(cellPosition)) != null
                 && data.get(toRow(cellPosition)).get(toCol(cellPosition)) != null) {
             Cell c = getCell(cellPosition);
@@ -144,6 +144,18 @@ public class Table {
             fixWidth(c);
         } else {
             Cell c = new Cell(cellPosition, parsedTree);
+            this.putCell(c);
+        }
+    }
+
+    public void setCellByValue(String cellPosition, Double value) {
+        if (data.get(toRow(cellPosition)) != null
+                && data.get(toRow(cellPosition)).get(toCol(cellPosition)) != null) {
+            Cell c = getCell(cellPosition);
+            c.setValue(value);
+            fixWidth(c);
+        } else {
+            Cell c = new Cell(cellPosition, value);
             this.putCell(c);
         }
     }
@@ -156,5 +168,21 @@ public class Table {
                         : getColumnWidth(c.getCol()
                 )
         );
+    }
+
+    public void setCellByExpression(String cellPosition, String expressionTobeParsed) {
+        ExpressionParser ep = new ExpressionParser(this);
+        setCell(cellPosition, ep.parse(expressionTobeParsed));
+    }
+
+    String displayAllExpressions() {
+        StringBuilder sb = new StringBuilder();
+        this.data.forEach((row, v) -> v.forEach((col, cell) -> {
+            sb.append("\n\t")
+                    .append(toCellReference(row, col))
+                    .append("=")
+                    .append(cell.getExpressionAsString());
+        }));
+        return sb.toString();
     }
 }
