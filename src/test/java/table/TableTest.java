@@ -168,16 +168,20 @@ class TableTest {
 
 
     @Test
-    void toSeeIfTreeContainsAllNodesInItsPrivateSet() {
+    void toSeeIfAllExpressionsCouldBePrinted() {
         Table myTable = new Table();
         myTable.setCellByValue("A2", 88.0);
         myTable.setCellByExpression("E5", "5 - 100 / (3+7-(A2/11))");
-//        myTable.setCellByExpression("D3", "E5/13.54^1.876");
-//
+        myTable.setCellByExpression("D3", "E5/13.54^1.876");
+
+
+        //TODO this test is about the toPrint() method in Table class which should use
+        //TODO DependencyGraph.calculate() before adding any values to thew string !!!
+
 //        DependencyGraph dg = new DependencyGraph(myTable);
 //        dg.calculate();
 //        System.out.println(dg.getInDegree());
-//
+
 //        assertEquals("\n" +
 //                "   ||   A  |  B  |  C  |          D  |    E  |\n" +
 //                "===========|=====|=====|=============|=======|\n" +
@@ -191,9 +195,10 @@ class TableTest {
 //                "----------------------------------------------\n" +
 //                " 5 ||      |     |     |             |  -45  |\n" +
 //                "----------------------------------------------", myTable.toPrint());
-//        assertEquals("\n" +
-//                "\tA2=88\n" +
-//                "\tD3=E5/13.54^1.876\n" +
-//                "\tE5=5-100/(3+7-(A2/11))", myTable.displayAllExpressions());
+
+        assertEquals("\n" +
+                "\tA2=88\n" +
+                "\tD3=E5/13.54^1.876\n" +
+                "\tE5=5-100/(3+7-(A2/11))", myTable.displayAllExpressions());
     }
 }

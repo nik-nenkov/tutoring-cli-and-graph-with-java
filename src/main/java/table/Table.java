@@ -1,5 +1,6 @@
 package table;
 
+import dependency.DependencyGraph;
 import expression.ExpressionTree;
 
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import static utilities.Converter.*;
 public class Table {
 
     private final Set<Cell> cells;
+    private final DependencyGraph dp;
     private final Map<Integer, Map<Integer, Cell>> data;
     private final Map<Integer, Integer> columnWidth;
     private final int DEFAULT_COLUMN_WIDTH = 5;
@@ -20,6 +22,7 @@ public class Table {
     private int numCols;
 
     private Table(int r, int c) {
+        dp = new DependencyGraph(this);
         data = new HashMap<>();
         cells = new HashSet<>();
         columnWidth = new HashMap<>();
@@ -53,6 +56,9 @@ public class Table {
     }
 
     public String toPrint() {
+
+//        dp.calculate();
+        //TODO somewhere around this point we should recalculate before printing anything
 
         if (data.size() == 0) {
             return "\nEmpty table!\n";
