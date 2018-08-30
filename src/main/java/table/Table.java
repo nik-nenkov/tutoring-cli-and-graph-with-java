@@ -122,7 +122,7 @@ public class Table {
         return columnWidth.get(column) == null ? DEFAULT_COLUMN_WIDTH : columnWidth.get(column);
     }
 
-    Cell getCell(String position) {
+    public Cell getCell(String position) {
         int row = toRow(position);
         int col = toCol(position);
         return this.data.get(row).get(col);

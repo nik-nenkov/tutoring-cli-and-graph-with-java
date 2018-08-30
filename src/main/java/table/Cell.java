@@ -18,6 +18,18 @@ public class Cell {
     private String content;
     private int row;
     private int col;
+
+    /**
+     * Constructor:
+     */
+
+    public Cell(String position, String content) {
+        this.position = position;
+        this.content = content;
+        this.row = toRow(position);
+        this.col = toCol(position);
+    }
+
     private BigDecimal value;
     private ExpressionTree expression;
 
@@ -38,14 +50,8 @@ public class Cell {
     private boolean hasError = false;
     private String state = NOT_INITIALIZED_STATE;
 
-    /**
-     * Constructor:
-     */
-    public Cell(String position, String content) {
-        this.position = position;
-        this.content = content;
-        this.row = toRow(position);
-        this.col = toCol(position);
+    public BigDecimal getValue() {
+        return value;
     }
 
     Cell(String position, long value) {

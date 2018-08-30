@@ -1,8 +1,8 @@
 package table;
 
+import expression.ExpressionParser;
 import org.junit.jupiter.api.Test;
 
-import static expression.ExpressionParser.parse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TableTest {
@@ -14,6 +14,7 @@ class TableTest {
     @Test
     void toPrint() {
         Table t = new Table();
+        ExpressionParser xps = new ExpressionParser(t);
         t.putCell(new Cell("E8", 1));
         t.putCell(new Cell("D1", 7));
         t.putCell(new Cell("B4", 4));
@@ -37,7 +38,7 @@ class TableTest {
                 "-----------------------------------\n" +
                 " 8 ||     |     |     |     |  1  |\n" +
                 "-----------------------------------", t.toPrint());
-        t.setCell("B4", parse("(9+5)/11-4*(3+7)-1"));
+        t.setCell("B4", xps.parse("(9+5)/11-4*(3+7)-1"));
         assertEquals("\n" +
                 "   ||  A  |              B  |  C  |  D  |  E  |\n" +
                 "==========|=================|=====|=====|=====|\n" +
@@ -97,6 +98,7 @@ class TableTest {
     @Test
     void toPrintWeirdTable() {
         Table t = new Table();
+        ExpressionParser xps = new ExpressionParser(t);
         t.putCell(new Cell("E8", 1));
         t.putCell(new Cell("D1", 753436));
         t.putCell(new Cell("B4", 44355656));
@@ -121,7 +123,7 @@ class TableTest {
                 " 8 ||     |            |     |          |  1  |\n" +
                 "-----------------------------------------------", t.toPrint());
         Cell c = t.getCell("B4");
-        c.setExpression(parse("44355656-1"));
+        c.setExpression(xps.parse("44355656-1"));
         assertEquals("\n" +
                 "   ||  A  |         B  |  C  |       D  |  E  |\n" +
                 "==========|============|=====|==========|=====|\n" +
@@ -156,7 +158,8 @@ class TableTest {
     @Test
     void putCellWhenNoPreviousRecordOnThisPosition() {
         Table t = new Table();
-        t.setCell("A1", parse("(10-4)/2"));
+        ExpressionParser xps = new ExpressionParser(t);
+        t.setCell("A1", xps.parse("(10-4)/2"));
         assertEquals("\n" +
                 "   ||  A  |\n" +
                 "==========|\n" +

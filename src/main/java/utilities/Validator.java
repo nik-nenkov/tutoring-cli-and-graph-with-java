@@ -5,6 +5,8 @@ import java.security.InvalidParameterException;
 public final class Validator {
     private static final String VALID_OPERATOR_PATTERN = "([+\\-*/^])";
     private static final String VALID_DECIMAL_PATTERN = "(([1-9][0-9]*)|([0]))([.][0-9]{1,8})?";
+    private static final String CELL_POSITION_PATTERN = "([A-Z]{1,6})([1-9])([0-9]{0,9})";
+    private static final String VALID_OPERAND_PATTERN = "(" + VALID_DECIMAL_PATTERN + ")|(" + CELL_POSITION_PATTERN + ")";
 
     public static String removeEmptySpaces(String input) {
         return input.trim()
@@ -13,24 +15,26 @@ public final class Validator {
                 .replace(" ", "");
     }
 
+    public static String[] extractOperands(String input) {
+        return input.split(VALID_OPERATOR_PATTERN);
+    }
+
+    @Deprecated
     public static String[] extractDecimals(String input) {
         return input.split(VALID_DECIMAL_PATTERN);
     }
 
     public static String[] extractOperators(String input) {
-        return input.split(VALID_OPERATOR_PATTERN);
+        return input.split(VALID_OPERAND_PATTERN);
     }
 
-
-    private static final String CELL_POSITION_PATTERN =
-            "^([A-Z]{1,6})([1-9])([0-9]{0,9})$";
 
     private static final String EXPRESSION_PATTERN =
             "^(((([A-Z]{1,6})([1-9])([0-9]{0,9}))|" +
                     "(([1-9]+[0-9]*)?(\\.[0-9]+)?))([\\s]*)([+\\-/*^])?)*$";
 
 
-    static boolean isValidCellPosition(String position) {
+    public static boolean isValidCellPosition(String position) {
         return position.matches(CELL_POSITION_PATTERN);
     }
 
@@ -88,7 +92,4 @@ public final class Validator {
         return counter == 0;
     }
 
-//    public static boolean isCellRefference(String input) {
-//        return input.matches(CELL_POSITION_PATTERN);
-//    }
 }
