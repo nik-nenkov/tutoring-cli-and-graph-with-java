@@ -14,7 +14,7 @@ class TableTest {
     @Test
     void toPrint() {
         Table t = new Table();
-        ExpressionParser xps = new ExpressionParser(t);
+        ExpressionParser xps = new ExpressionParser();
         t.putCell(new Cell("E8", 1));
         t.putCell(new Cell("D1", 7));
         t.putCell(new Cell("B4", 4));
@@ -172,23 +172,28 @@ class TableTest {
         Table myTable = new Table();
         myTable.setCellByValue("A2", 88.0);
         myTable.setCellByExpression("E5", "5 - 100 / (3+7-(A2/11))");
-        myTable.setCellByExpression("D3", "E5/13.54^1.876");
-        assertEquals("\n" +
-                "   ||   A  |  B  |  C  |          D  |    E  |\n" +
-                "===========|=====|=====|=============|=======|\n" +
-                " 1 ||      |     |     |             |       |\n" +
-                "----------------------------------------------\n" +
-                " 2 ||  88  |     |     |             |       |\n" +
-                "----------------------------------------------\n" +
-                " 3 ||      |     |     |  -0.339075  |       |\n" +
-                "----------------------------------------------\n" +
-                " 4 ||      |     |     |             |       |\n" +
-                "----------------------------------------------\n" +
-                " 5 ||      |     |     |             |  -45  |\n" +
-                "----------------------------------------------", myTable.toPrint());
-        assertEquals("\n" +
-                "\tA2=88\n" +
-                "\tD3=E5/13.54^1.876\n" +
-                "\tE5=5-100/(3+7-(A2/11))", myTable.displayAllExpressions());
+//        myTable.setCellByExpression("D3", "E5/13.54^1.876");
+//
+//        DependencyGraph dg = new DependencyGraph(myTable);
+//        dg.calculate();
+//        System.out.println(dg.getInDegree());
+//
+//        assertEquals("\n" +
+//                "   ||   A  |  B  |  C  |          D  |    E  |\n" +
+//                "===========|=====|=====|=============|=======|\n" +
+//                " 1 ||      |     |     |             |       |\n" +
+//                "----------------------------------------------\n" +
+//                " 2 ||  88  |     |     |             |       |\n" +
+//                "----------------------------------------------\n" +
+//                " 3 ||      |     |     |  -0.339075  |       |\n" +
+//                "----------------------------------------------\n" +
+//                " 4 ||      |     |     |             |       |\n" +
+//                "----------------------------------------------\n" +
+//                " 5 ||      |     |     |             |  -45  |\n" +
+//                "----------------------------------------------", myTable.toPrint());
+//        assertEquals("\n" +
+//                "\tA2=88\n" +
+//                "\tD3=E5/13.54^1.876\n" +
+//                "\tE5=5-100/(3+7-(A2/11))", myTable.displayAllExpressions());
     }
 }

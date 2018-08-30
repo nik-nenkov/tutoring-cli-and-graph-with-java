@@ -1,15 +1,18 @@
 package table;
 
-import expression.ExpressionParser;
 import expression.ExpressionTree;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+import static expression.ExpressionParser.parseWithReference;
 import static utilities.Converter.*;
 
 public class Table {
 
+    private final Set<Cell> cells;
     private final Map<Integer, Map<Integer, Cell>> data;
     private final Map<Integer, Integer> columnWidth;
     private final int DEFAULT_COLUMN_WIDTH = 5;
@@ -18,6 +21,7 @@ public class Table {
 
     private Table(int r, int c) {
         data = new HashMap<>();
+        cells = new HashSet<>();
         columnWidth = new HashMap<>();
         numRows = r;
         numCols = c;
@@ -44,7 +48,7 @@ public class Table {
         numCols = numCols < c.getCol() ? c.getCol() : numCols;
         data.putIfAbsent(c.getRow(), new HashMap<>());
         data.get(c.getRow()).put(c.getCol(), c);
-
+        cells.add(c);
         fixWidth(c);
     }
 
@@ -126,7 +130,9 @@ public class Table {
     public Cell getCell(String position) {
         int row = toRow(position);
         int col = toCol(position);
-        return this.data.get(row).get(col);
+        if (data.get(row) != null && data.get(row).get(col) != null) {
+            return this.data.get(row).get(col);
+        } else return null;
     }
 
     /**
@@ -137,26 +143,24 @@ public class Table {
      *                     if not - create new cell and put it in the map
      */
     private void setCell(String cellPosition, ExpressionTree parsedTree) {
-        if (data.get(toRow(cellPosition)) != null
-                && data.get(toRow(cellPosition)).get(toCol(cellPosition)) != null) {
-            Cell c = getCell(cellPosition);
+
+        Cell c = getCell(cellPosition);
+        if (c != null) {
             c.setExpression(parsedTree);
             fixWidth(c);
         } else {
-            Cell c = new Cell(cellPosition, parsedTree);
-            this.putCell(c);
+            this.putCell(new Cell(cellPosition, parsedTree));
         }
+
     }
 
     public void setCellByValue(String cellPosition, Double value) {
-        if (data.get(toRow(cellPosition)) != null
-                && data.get(toRow(cellPosition)).get(toCol(cellPosition)) != null) {
-            Cell c = getCell(cellPosition);
+        Cell c = getCell(cellPosition);
+        if (c != null) {
             c.setValue(value);
             fixWidth(c);
         } else {
-            Cell c = new Cell(cellPosition, value);
-            this.putCell(c);
+            this.putCell(new Cell(cellPosition, value));
         }
     }
 
@@ -171,8 +175,7 @@ public class Table {
     }
 
     public void setCellByExpression(String cellPosition, String expressionTobeParsed) {
-        ExpressionParser ep = new ExpressionParser(this);
-        setCell(cellPosition, ep.parse(expressionTobeParsed));
+        setCell(cellPosition, parseWithReference(expressionTobeParsed, cellPosition));
     }
 
     String displayAllExpressions() {
@@ -184,5 +187,9 @@ public class Table {
                     .append(cell.getExpressionAsString());
         }));
         return sb.toString();
+    }
+
+    public Set<Cell> getCells() {
+        return cells;
     }
 }

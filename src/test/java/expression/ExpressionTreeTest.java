@@ -13,19 +13,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ExpressionTreeTest {
 
     private final Table myTable = new Table();
-    private final ExpressionParser xps = new ExpressionParser(myTable);
+    private final ExpressionParser xps = new ExpressionParser();
 
     @Test
     void getExpressionStripEmptySpaces() {
         assertEquals("3-5/(6+3-5/(6+3-5/(6+3)))",
-                xps.parse("3 - 5 / ( 6 + 3 - 5 / ( 6 + 3 - 5 / ( 6 + 3 ) ) )").getExpression());
+                ExpressionParser.parse("3 - 5 / ( 6 + 3 - 5 / ( 6 + 3 - 5 / ( 6 + 3 ) ) )").getExpression());
     }
 
     @Test
     void getExpression() {
         assertEquals(
                 "((5-4.5^3)/4*7^1.5-5)/6/2*7+3*320.576/(8/3)^2^2*3.565+5",
-                xps.parse("((5 - 4.5^3)/4*7^1.5-5)/6/2*7 + 3 * 320.576/(8 / 3) ^ 2 ^ 2 * 3.565 + 5")
+                ExpressionParser.parse("((5 - 4.5^3)/4*7^1.5-5)/6/2*7 + 3 * 320.576/(8 / 3) ^ 2 ^ 2 * 3.565 + 5")
                         .getExpression()
         );
 
@@ -34,7 +34,7 @@ class ExpressionTreeTest {
     @Test
     void precision() {
         assertEquals(BigDecimal.valueOf(252.294341633),
-                xps.parse("((5-4.5^3)/4*7^1.5-5)/6/2*7+3*320.58/(8/3)^2*3.57+5")
+                ExpressionParser.parse("((5-4.5^3)/4*7^1.5-5)/6/2*7+3*320.58/(8/3)^2*3.57+5")
                         .getResult()
         );
     }

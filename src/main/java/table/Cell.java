@@ -61,12 +61,16 @@ public class Cell {
         this.col = toCol(position);
     }
 
-    Cell(String position, ExpressionTree value) {
+    Cell(String position, ExpressionTree et) {
         this.position = position;
-        this.value = value.getValue();
+        this.value = et.getValue();
         this.row = toRow(position);
         this.col = toCol(position);
-        this.expressionTree = value;
+        this.expressionTree = et;
+    }
+
+    public ExpressionTree getExpressionTree() {
+        return expressionTree;
     }
 
     public BigDecimal getValue() {
@@ -93,21 +97,25 @@ public class Cell {
 
     @Override
     public String toString() {
-        if (expressionTree != null)
-            return expressionTree
-                    .getResult()
-                    .setScale(6, RoundingMode.HALF_UP)
-                    .stripTrailingZeros()
-                    .toPlainString();
+        //TODO make this return information if cell is still not calculated by graph !!!
 
-        if (value != null)
-            return value
-                    .setScale(6, RoundingMode.HALF_UP)
-                    .stripTrailingZeros()
-                    .toPlainString();
+        try {
+            if (expressionTree != null)
+                return expressionTree
+                        .getResult()
+                        .setScale(6, RoundingMode.HALF_UP)
+                        .stripTrailingZeros()
+                        .toPlainString();
+            if (value != null)
+                return value
+                        .setScale(6, RoundingMode.HALF_UP)
+                        .stripTrailingZeros()
+                        .toPlainString();
 
-        if (content != null) return content;
-
+            if (content != null) return content;
+        } catch (Exception e) {
+            return " ";
+        }
         return " ";
     }
 

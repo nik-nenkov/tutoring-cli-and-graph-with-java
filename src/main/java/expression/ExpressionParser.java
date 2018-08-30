@@ -1,18 +1,11 @@
 package expression;
 
-import table.Table;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static utilities.Validator.*;
 
 public class ExpressionParser {
-    private final Table referenceTable;
-
-    public ExpressionParser(Table referenceTable) {
-        this.referenceTable = referenceTable;
-    }
 
     private static void compute(List<Node> leafNodes, List<InnerNode> innerNodes) {
         int priorityLevel = 4;
@@ -58,9 +51,15 @@ public class ExpressionParser {
         }
     }
 
-    public ExpressionTree parse(String rawInput) {
+    public static ExpressionTree parseWithReference(String rawInput, String rawPosition) {
+        ExpressionTree et = parse(rawInput);
+        return new ExpressionTree(et.getRoot(), et.getNodes(), removeEmptySpaces(rawPosition));
+    }
+
+    static ExpressionTree parse(String rawInput) {
 
         String input = removeEmptySpaces(rawInput);
+
         List<Node> leafNodes = new ArrayList<>();
         List<InnerNode> innerNodes = new ArrayList<>();
         if (input.contains("(") && input.contains(")")) {
@@ -94,13 +93,13 @@ public class ExpressionParser {
             treeNodes.addAll(innerNodes);
 
             compute(leafNodes, innerNodes);
-            return new ExpressionTree(leafNodes.get(0), treeNodes, referenceTable);
+            return new ExpressionTree(leafNodes.get(0), treeNodes);
         } else {
             return parseExpressionTreeFromString(input);
         }
     }
 
-    private ExpressionTree parseExpressionTreeFromString(String input) {
+    private static ExpressionTree parseExpressionTreeFromString(String input) {
 
         List<Node> leafNodes = new ArrayList<>();
         List<InnerNode> innerNodes = new ArrayList<>();
@@ -110,22 +109,26 @@ public class ExpressionParser {
         treeNodes.addAll(innerNodes);
 
         compute(leafNodes, innerNodes);
-        return new ExpressionTree(leafNodes.get(0), treeNodes, referenceTable);
+        return new ExpressionTree(leafNodes.get(0), treeNodes);
     }
 
-    private void appendArraysWithExpression(String input, List<Node> leafNodes, List<InnerNode> innerNodes) {
+    private static void appendArraysWithExpression(String input, List<Node> leafNodes, List<InnerNode> innerNodes) {
 
-        leafNodes.addAll(Arrays.stream(extractOperands(input))
-                .map(String::trim)
-                .filter(leaf -> !leaf.equals(""))
-                .map((String initial) -> new LeafNode(initial, referenceTable))
-                .collect(Collectors.toList()));
+        leafNodes.addAll(
+                Arrays.stream(extractOperands(input))
+                        .map(String::trim)
+                        .filter(leaf -> !leaf.equals(""))
+                        .map(LeafNode::new)
+                        .collect(Collectors.toList())
+        );
 
-        innerNodes.addAll(Arrays.stream(extractOperators(input))
-                .map(String::trim)
-                .filter(inner -> !inner.equals(""))
-                .map(InnerNode::new)
-                .collect(Collectors.toList()));
+        innerNodes.addAll(
+                Arrays.stream(extractOperators(input))
+                        .map(String::trim)
+                        .filter(inner -> !inner.equals(""))
+                        .map(InnerNode::new)
+                        .collect(Collectors.toList())
+        );
     }
 
 }

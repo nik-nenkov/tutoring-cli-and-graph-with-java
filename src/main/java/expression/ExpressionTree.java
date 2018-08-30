@@ -1,7 +1,5 @@
 package expression;
 
-import table.Table;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Set;
@@ -13,20 +11,26 @@ import java.util.Set;
  */
 public class ExpressionTree implements Node {
 
+    private final String reference;
     private final Node root;
     private final Set<Node> nodes;
-    private final Table referenceTable;
 
-    ExpressionTree(Node root, Set<Node> nodes, Table referenceTable) {
+    ExpressionTree(Node root, Set<Node> nodes) {
         this.root = root;
         this.nodes = nodes;
-        this.referenceTable = referenceTable;
+        this.reference = null;
+    }
+
+    ExpressionTree(Node root, Set<Node> nodes, String reference) {
+        this.root = root;
+        this.nodes = nodes;
+        this.reference = reference;
     }
 
     @Override
     public BigDecimal getValue() {
-        return root == null ? BigDecimal.ZERO
-                : root.getValue();
+        return reference == null ? root.getValue()
+                : BigDecimal.ZERO;
     }
 
     @Override
@@ -34,7 +38,17 @@ public class ExpressionTree implements Node {
         return root.getExpression();
     }
 
-    Set<Node> getNodes() {
+    @Override
+    public boolean isReference() {
+        return reference != null;
+    }
+
+    @Override
+    public String getReference() {
+        return this.reference;
+    }
+
+    public Set<Node> getNodes() {
         return nodes;
     }
 
@@ -47,7 +61,7 @@ public class ExpressionTree implements Node {
         return root.getValue().setScale(9, RoundingMode.HALF_UP).stripTrailingZeros();
     }
 
-    public Table getReferenceTable() {
-        return referenceTable;
+    Node getRoot() {
+        return this.root;
     }
 }

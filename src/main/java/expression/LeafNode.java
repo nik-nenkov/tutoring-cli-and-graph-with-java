@@ -1,26 +1,22 @@
 package expression;
 
-import table.Cell;
-import table.Table;
-
 import java.math.BigDecimal;
 import java.math.MathContext;
 
 import static java.lang.Double.parseDouble;
-import static java.math.BigDecimal.ZERO;
 import static java.math.RoundingMode.HALF_UP;
 import static utilities.Validator.isValidCellPosition;
 
 class LeafNode implements Node {
     private final boolean isReference;
     private final BigDecimal value;
-    private final Cell cellReference;
+    private final String cellReference;
 
-    LeafNode(String initial, Table tableToRefer) {
+    LeafNode(String initial) {
         if (isValidCellPosition(initial)) {
             this.isReference = true;
-            this.cellReference = tableToRefer.getCell(initial);
-            this.value = cellReference.getValue();
+            this.cellReference = initial;
+            this.value = null;
         } else {
             this.isReference = false;
             this.cellReference = null;
@@ -31,17 +27,27 @@ class LeafNode implements Node {
     @Override
     public BigDecimal getValue() {
         if (isReference) {
-            return cellReference.getValue();
+            return null;
         }
-        return value == null ? ZERO : value;
+        return value;
     }
 
     @Override
     public String getExpression() {
         if (isReference) {
-            return cellReference.getPosition();
+            return cellReference;
         }
         return value.setScale(3, HALF_UP).stripTrailingZeros().toPlainString();
+    }
+
+    @Override
+    public boolean isReference() {
+        return isReference;
+    }
+
+    @Override
+    public String getReference() {
+        return cellReference;
     }
 
 //    public Cell getCellReference() {

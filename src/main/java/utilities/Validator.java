@@ -86,4 +86,7 @@ public final class Validator {
         return counter == 0;
     }
 
+    public static boolean containsCellReference(String expression) {
+        return expression.contains(CELL_POSITION_PATTERN);
+    }
 }

@@ -41,6 +41,16 @@ class InnerNode implements Node {
         return sb.toString();
     }
 
+    @Override
+    public boolean isReference() {
+        return false;
+    }
+
+    @Override
+    public String getReference() {
+        return null;
+    }
+
     void setRightNode(Node rightNode) {
         this.rightNode = rightNode;
     }
