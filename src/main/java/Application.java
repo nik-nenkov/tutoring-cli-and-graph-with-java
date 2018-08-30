@@ -50,12 +50,14 @@ public class Application {
     private static void processEntry() {
         if (!lastInput.equals("")) {
             String[] parts = lastInput.split("=");
+
             if (isValidDecimal(parts[1].trim())) {
                 myTable.setCellByValue(
                         parts[0].trim(),
                         Double.parseDouble(parts[1].trim()));
             }
             myTable.setCellByExpression(parts[0].trim(), parts[1]);
+
         }
     }
 

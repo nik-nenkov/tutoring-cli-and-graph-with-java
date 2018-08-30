@@ -57,6 +57,7 @@ public class Table {
 
     public String toPrint() {
 
+
 //        dp.calculate();
         //TODO somewhere around this point we should recalculate before printing anything
 
@@ -197,5 +198,9 @@ public class Table {
 
     public Set<Cell> getCells() {
         return cells;
+    }
+
+    public DependencyGraph getDp() {
+        return dp;
     }
 }

@@ -49,13 +49,4 @@ class LeafNode implements Node {
     public String getReference() {
         return cellReference;
     }
-
-//    public Cell getCellReference() {
-//        return cellReference;
-//    }
-//
-//    public boolean isReference() {
-//        return isReference;
-//    }
-
 }

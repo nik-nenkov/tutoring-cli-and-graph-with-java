@@ -33,9 +33,9 @@ public class DependencyGraph {
         }
     }
 
-    public void calculate() {
+    void calculate() {
         referenceTable.getCells().forEach(cell -> {
-            if (cell.getExpressionTree().isReference()) {
+            if (cell.getExpressionTree() != null && cell.getExpressionTree().isReference()) {
                 findDependencies(cell.getExpressionTree());
             }
         });

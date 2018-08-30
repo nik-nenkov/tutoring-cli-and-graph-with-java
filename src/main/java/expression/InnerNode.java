@@ -43,7 +43,7 @@ class InnerNode implements Node {
 
     @Override
     public boolean isReference() {
-        return false;
+        return getReference() != null;
     }
 
     @Override

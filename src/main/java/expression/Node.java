@@ -7,8 +7,8 @@ public interface Node {
 
     String getExpression();
 
+
     boolean isReference();
 
     String getReference();
-
 }

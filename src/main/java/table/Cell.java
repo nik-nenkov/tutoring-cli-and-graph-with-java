@@ -4,8 +4,6 @@ import expression.ExpressionTree;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
 
 import static utilities.Converter.toCol;
 import static utilities.Converter.toRow;
@@ -21,24 +19,6 @@ public class Cell {
     private int col;
     private BigDecimal value;
     private ExpressionTree expressionTree;
-    /**
-     * Support multiple dependencies for each node:
-     */
-    private List<Cell> dependencies;
-    /**
-     * Support multiple observers on each cell:
-     */
-    private List<Cell> observers = new ArrayList<>();
-    /**
-     * Handling of cell's states:
-     */
-    private boolean initialized = false;
-    private boolean hasError = false;
-    private String state = NOT_INITIALIZED_STATE;
-
-    /**
-     * Constructor:
-     */
 
     public Cell(String position, String content) {
         this.position = position;
@@ -73,26 +53,10 @@ public class Cell {
         return expressionTree;
     }
 
-    public BigDecimal getValue() {
-        return value;
-    }
-
     void setValue(Double value) {
         this.value = BigDecimal.valueOf(value);
         this.expressionTree = null;
         this.content = null;
-    }
-
-    /**
-     * Recalculating only whats relevant(not everything):
-     */
-    private void recalculate() {
-        boolean response = notifyObservers();
-    }
-
-    private boolean notifyObservers() {
-        observers.forEach(Cell::notify);
-        return false;
     }
 
     @Override
@@ -137,20 +101,10 @@ public class Cell {
         return col;
     }
 
-    public void setCol(int col) {
-        this.col = col;
-    }
 
     int getRow() {
         return row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public String getPosition() {
-        return position;
-    }
 
 }

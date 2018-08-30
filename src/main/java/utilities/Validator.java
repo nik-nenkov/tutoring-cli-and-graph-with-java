@@ -19,11 +19,6 @@ public final class Validator {
         return input.split(OPERATOR_PATTERN);
     }
 
-    @Deprecated
-    public static String[] extractDecimals(String input) {
-        return input.split(DECIMAL_PATTERN);
-    }
-
     public static String[] extractOperators(String input) {
         return input.split(OPERAND_PATTERN);
     }
@@ -86,7 +81,4 @@ public final class Validator {
         return counter == 0;
     }
 
-    public static boolean containsCellReference(String expression) {
-        return expression.contains(CELL_POSITION_PATTERN);
-    }
 }
