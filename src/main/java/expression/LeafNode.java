@@ -59,8 +59,4 @@ public class LeafNode implements Node {
         return cellReference;
     }
 
-    @Override
-    public String toString() {
-        return value == null ? cellReference : value.setScale(2, HALF_UP).stripTrailingZeros().toPlainString();
-    }
 }

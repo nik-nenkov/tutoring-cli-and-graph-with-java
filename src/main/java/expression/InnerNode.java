@@ -63,8 +63,4 @@ class InnerNode implements Node {
         return operation.getPriority();
     }
 
-    @Override
-    public String toString() {
-        return operation.toString();
-    }
 }

@@ -55,7 +55,7 @@ public enum Operation {
                 throw new RuntimeException() {
                     @Override
                     public String getMessage() {
-                        return "invalid constructor operation" + s;
+                        return "invalid constructor operation: \"" + s + "\"";
                     }
                 };
         }
@@ -75,10 +75,8 @@ public enum Operation {
                 return a.add(b);
             case Multiplication:
                 return a.multiply(b);
-            case Exponentiation:
-                return BigDecimalMath.pow(a, b, mc);
             default:
-                throw new RuntimeException();
+                return BigDecimalMath.pow(a, b, mc);
         }
     }
 
@@ -86,8 +84,4 @@ public enum Operation {
         return operator;
     }
 
-    @Override
-    public String toString() {
-        return operator;
-    }
 }

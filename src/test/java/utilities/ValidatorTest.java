@@ -48,8 +48,8 @@ class ValidatorTest {
 
 
     @Test
-    void toFindFirstStringInsideBrackets() {
-        //assertEquals("asd(ASD)asd",Validator.extractTheThingFromInsideTheBrackets("dsadsad(SADS(DSAD)DASD((DASD)DSA)SAD)SAD"));
+    void toCheckDecimal() {
+        assertEquals(true, Validator.isValidDecimal("13.145"));
     }
 
 

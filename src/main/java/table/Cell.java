@@ -13,75 +13,61 @@ public class Cell {
     private static final String INITIALIZED_STATE = "Initialized";
     private static final String NOT_INITIALIZED_STATE = "Not initialized";
 
-    private final String position;
     private String content;
     private int row;
     private int col;
     private BigDecimal value;
     private ExpressionTree expressionTree;
 
-    public Cell(String position, String content) {
-        this.position = position;
+    private Cell(String position, String content, BigDecimal value, ExpressionTree et) {
+        this.row = toRow(position);
+        this.col = toCol(position);
         this.content = content;
-        this.row = toRow(position);
-        this.col = toCol(position);
-    }
-
-    Cell(String position, long value) {
-        this.position = position;
-        this.value = BigDecimal.valueOf(value);
-        this.row = toRow(position);
-        this.col = toCol(position);
-    }
-
-    Cell(String position, double value) {
-        this.position = position;
-        this.value = BigDecimal.valueOf(value);
-        this.row = toRow(position);
-        this.col = toCol(position);
-    }
-
-    Cell(String position, ExpressionTree et) {
-        this.position = position;
-        this.value = et.getValue();
-        this.row = toRow(position);
-        this.col = toCol(position);
+        this.value = value;
         this.expressionTree = et;
+    }
+
+    public Cell(String position, String content) {
+        this(position, content, null, null);
+    }
+
+    Cell(String position, BigDecimal value) {
+        this(position, null, value, null);
+    }
+
+    Cell(String position, ExpressionTree expressionTree) {
+        this(position, null, null, expressionTree);
     }
 
     public ExpressionTree getExpressionTree() {
         return expressionTree;
     }
 
-    void setValue(Double value) {
-        this.value = BigDecimal.valueOf(value);
-    }
-
     public BigDecimal getValue() {
         return this.expressionTree == null ? this.value : this.expressionTree.getValue();
     }
+
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
+
     @Override
     public String toString() {
-        //TODO make this return information if cell is still not calculated by graph !!!
 
-        try {
-            if (expressionTree != null)
-                return expressionTree
-                        .getResult()
-                        .setScale(6, RoundingMode.HALF_UP)
-                        .stripTrailingZeros()
-                        .toPlainString();
-            if (value != null)
-                return value
-                        .setScale(6, RoundingMode.HALF_UP)
-                        .stripTrailingZeros()
-                        .toPlainString();
+        if (expressionTree != null)
+            return expressionTree
+                    .getResult()
+                    .setScale(6, RoundingMode.HALF_UP)
+                    .stripTrailingZeros()
+                    .toPlainString();
+        if (value != null)
+            return value
+                    .setScale(6, RoundingMode.HALF_UP)
+                    .stripTrailingZeros()
+                    .toPlainString();
 
-            if (content != null) return content;
-        } catch (Exception e) {
-            return " ";
-        }
-        return " ";
+        else return content;
+
     }
 
     /**
@@ -104,12 +90,7 @@ public class Cell {
         return col;
     }
 
-
     int getRow() {
         return row;
-    }
-
-    public void setValue(BigDecimal value) {
-        this.value = value;
     }
 }

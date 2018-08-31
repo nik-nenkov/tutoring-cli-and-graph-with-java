@@ -3,21 +3,28 @@ package table;
 import dependency.DependencyGraph;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TableTest {
 
     @Test
-    void putCell() {
+    void setCellValueBigDecimal() {
+
+        Table t = new Table();
+        t.putCell(new Cell("E8", BigDecimal.valueOf(1)));
+        t.setCellByValue("E8", BigDecimal.valueOf(13.45));
+        assertEquals("13.45", t.getCell("E8").toString());
     }
 
     @Test
     void toPrint() {
         Table t = new Table();
-        t.putCell(new Cell("E8", 1));
-        t.putCell(new Cell("D1", 7));
-        t.putCell(new Cell("B4", 4));
-        t.putCell(new Cell("C3", 3));
+        t.putCell(new Cell("E8", BigDecimal.valueOf(1)));
+        t.putCell(new Cell("D1", BigDecimal.valueOf(7)));
+        t.putCell(new Cell("B4", BigDecimal.valueOf(4)));
+        t.putCell(new Cell("C3", BigDecimal.valueOf(3)));
         assertEquals("\n" +
                 "   ||  A  |  B  |  C  |  D  |  E  |\n" +
                 "==========|=====|=====|=====|=====|\n" +
@@ -62,10 +69,10 @@ class TableTest {
     @Test
     void toPrintWiderColumnFour() {
         Table t = new Table();
-        t.putCell(new Cell("E8", 1));
-        t.putCell(new Cell("D1", 75611));
-        t.putCell(new Cell("B4", 4));
-        t.putCell(new Cell("C3", 3));
+        t.putCell(new Cell("E8", BigDecimal.valueOf(1)));
+        t.putCell(new Cell("D1", BigDecimal.valueOf(75611)));
+        t.putCell(new Cell("B4", BigDecimal.valueOf(4)));
+        t.putCell(new Cell("C3", BigDecimal.valueOf(3)));
 //        System.out.println(t.toPrint());
         assertEquals("\n" +
                 "   ||  A  |  B  |  C  |      D  |  E  |\n" +
@@ -97,10 +104,10 @@ class TableTest {
     @Test
     void toPrintWeirdTable() {
         Table t = new Table();
-        t.putCell(new Cell("E8", 1));
-        t.putCell(new Cell("D1", 753436));
-        t.putCell(new Cell("B4", 44355656));
-        t.putCell(new Cell("C3", 3));
+        t.putCell(new Cell("E8", BigDecimal.valueOf(1)));
+        t.putCell(new Cell("D1", BigDecimal.valueOf(753436)));
+        t.putCell(new Cell("B4", BigDecimal.valueOf(44355656)));
+        t.putCell(new Cell("C3", BigDecimal.valueOf(3)));
         assertEquals("\n" +
                 "   ||  A  |         B  |  C  |       D  |  E  |\n" +
                 "==========|============|=====|==========|=====|\n" +
@@ -144,15 +151,6 @@ class TableTest {
                 "-----------------------------------------------", t.toPrint());
     }
 
-    @Test
-    void tableGetCell() {
-        Table t = new Table();
-        t.putCell(new Cell("E8", 1));
-        t.putCell(new Cell("D1", 753436));
-        t.putCell(new Cell("B4", 44355656));
-        t.putCell(new Cell("C3", 3));
-        assertEquals("3", t.getCell("C3").toString());
-    }
 
     @Test
     void putCellWhenNoPreviousRecordOnThisPosition() {
@@ -169,7 +167,7 @@ class TableTest {
     @Test
     void toCalculateTable() {
         Table myTable = new Table();
-        myTable.setCellByValue("A2", 88.0);
+        myTable.setCellByValue("A2", BigDecimal.valueOf(88.0));
         myTable.setCellByExpression("E5", "5 - 100 / (3+7-(A2/11))");
         myTable.setCellByExpression("D3", "E5/13.54^1.876");
 
@@ -194,7 +192,7 @@ class TableTest {
     @Test
     void toPrintExpressions() {
         Table myTable = new Table();
-        myTable.setCellByValue("A2", 88.0);
+        myTable.setCellByValue("A2", BigDecimal.valueOf(88.0));
         myTable.setCellByExpression("E5", "5 - 100 / (3+7-(A2/11))");
         myTable.setCellByExpression("D3", "E5/13.54^1.876");
 

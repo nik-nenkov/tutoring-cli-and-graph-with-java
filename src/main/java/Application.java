@@ -3,6 +3,7 @@
 
 import table.Table;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 import static utilities.Validator.isValidDecimal;
@@ -54,7 +55,7 @@ public class Application {
             if (isValidDecimal(parts[1].trim())) {
                 myTable.setCellByValue(
                         parts[0].trim(),
-                        Double.parseDouble(parts[1].trim()));
+                        BigDecimal.valueOf(Double.parseDouble(parts[1].trim())));
             }
             myTable.setCellByExpression(parts[0].trim(), parts[1]);
 

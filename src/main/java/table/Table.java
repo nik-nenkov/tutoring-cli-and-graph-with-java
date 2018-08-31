@@ -3,6 +3,7 @@ package table;
 import dependency.DependencyGraph;
 import expression.ExpressionTree;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -161,7 +162,7 @@ public class Table {
 
     }
 
-    public void setCellByValue(String cellPosition, Double value) {
+    public void setCellByValue(String cellPosition, BigDecimal value) {
         Cell c = getCell(cellPosition);
         if (c != null) {
             c.setValue(value);
