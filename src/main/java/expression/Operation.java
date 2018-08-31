@@ -76,4 +76,9 @@ public enum Operation {
     public String getOperator() {
         return operator;
     }
+
+    @Override
+    public String toString() {
+        return operator;
+    }
 }

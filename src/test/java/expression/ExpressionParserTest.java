@@ -1,15 +1,16 @@
 package expression;
 
 import org.junit.jupiter.api.Test;
-import table.Table;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//import java.util.ArrayList;
+//import java.util.List;
+//import static expression.ExpressionParser.newCrazyIdea;
+
 class ExpressionParserTest {
-    private final Table myTable = new Table();
-    private final ExpressionParser xps = new ExpressionParser();
 
     @Test
     void parseExpressionTreeTest() {
@@ -75,14 +76,24 @@ class ExpressionParserTest {
 
     @Test
     void hardCoreTest() {
-        assertEquals(BigDecimal.valueOf(-414.663910881),
-                ExpressionParser.parse("5 - 4.5^3/4*7^1.5-5/6/2*7 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5").getResult());
+        assertEquals(
+                BigDecimal
+                        .valueOf(-414.663910881),
+                ExpressionParser
+                        .parse("5 - 4.5^3/4*7^1.5-5/6/2*7 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5")
+                        .getResult()
+        );
     }
 
     @Test
     void hardcoreTestComparedToWolframAlpha() {
-        assertEquals("-414.66391088112309739572120387982747767914956076884614386727950245738711057117094990125",
-                ExpressionParser.parse("5 - 4.5^3/4*7^1.5-5/6/2*7 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5").getValue().toString());
+        assertEquals(
+                "-414.66391088112309739572120387982747767914956076884614386727950245738711057117094990125",
+                ExpressionParser
+                        .parse("5 - 4.5^3/4*7^1.5-5/6/2*7 + 3 * 320.576/5 / 8 ^ 2 ^ 2 * 3.565 + 5")
+                        .getValue()
+                        .toString()
+        );
     }
 
     @Test
@@ -105,13 +116,19 @@ class ExpressionParserTest {
 
     @Test
     void anotherInsaneExpression() {
-        assertEquals(BigDecimal.valueOf(-20608009.9888491850195663326),
-                ExpressionParser.parse("(19291232-3.67787^1.345^6.78/13.3213)-6.786324*(8.21232+144.4214)^3.1+0.1 ").getResult());
+        assertEquals(
+                BigDecimal
+                        .valueOf(-20608009.9888491850195663326),
+                ExpressionParser
+                        .parse("(19291232-3.67787^1.345^6.78/13.3213)-6.786324*(8.21232+144.4214)^3.1+0.1 ")
+                        .getResult()
+        );
     }
 
     @Test
     void twoPlusTwo() {
-        assertEquals(BigDecimal.valueOf(10),
+        assertEquals(
+                BigDecimal.valueOf(10),
                 ExpressionParser.parse("2+((2*(3/3))*4)").getResult());
     }
 
@@ -120,4 +137,22 @@ class ExpressionParserTest {
         assertEquals(BigDecimal.valueOf(25),
                 ExpressionParser.parse("2+(4+(3*4)+(2*3)+1)").getResult());
     }
+
+    @Test
+    void someNegativeNumbers() {
+        assertEquals(BigDecimal.valueOf(8),
+                ExpressionParser.parse("-3+11").getResult());
+    }
+//
+//    @Test
+//    void myIdea(){
+//        String input = "6-7*3";
+//        List<InnerNode> innerNodes = new ArrayList<>();
+//        List<Node> leafNodes = new ArrayList<>();
+//        newCrazyIdea(input,leafNodes,innerNodes);
+//
+//        leafNodes.forEach(e-> System.out.println(e.toString()));
+//        innerNodes.forEach(e-> System.out.println(e.toString()));
+//
+//    }
 }

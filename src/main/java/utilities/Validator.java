@@ -3,7 +3,7 @@ package utilities;
 import java.security.InvalidParameterException;
 
 public final class Validator {
-    private static final String OPERATOR_PATTERN = "([+\\-*/^])";
+    private static final String OPERATOR_PATTERN = "(?![+\\-*/^])?([+\\-*/^])";
     private static final String DECIMAL_PATTERN = "(([1-9][0-9]*)|([0]))([.][0-9]{1,8})?";
     private static final String CELL_POSITION_PATTERN = "([A-Z]{1,6})([1-9])([0-9]{0,9})";
     private static final String OPERAND_PATTERN = "(" + DECIMAL_PATTERN + ")|(" + CELL_POSITION_PATTERN + ")";
@@ -81,4 +81,7 @@ public final class Validator {
         return counter == 0;
     }
 
+    public static boolean isValidOperator(String input) {
+        return input.matches("^" + OPERATOR_PATTERN + "$");
+    }
 }

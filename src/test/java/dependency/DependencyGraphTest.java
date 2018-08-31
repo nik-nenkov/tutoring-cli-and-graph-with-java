@@ -1,18 +1,9 @@
 package dependency;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import table.Table;
 
 class DependencyGraphTest {
-
-    @BeforeEach
-    void setUp() {
-    }
-
-    @Test
-    void addDependency() {
-    }
 
     @Test
     void calculate() {
@@ -21,21 +12,5 @@ class DependencyGraphTest {
         myTable.setCellByExpression("E5", "5 - 100 / (3+7-(A2/11))");
         myTable.setCellByExpression("D3", "E5/13.54^1.876");
         myTable.getDp().calculate();
-    }
-
-    @Test
-    void getOutDegree() {
-    }
-
-    @Test
-    void setOutDegree() {
-    }
-
-    @Test
-    void getIndependentNodes() {
-    }
-
-    @Test
-    void setIndependentNodes() {
     }
 }

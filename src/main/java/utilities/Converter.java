@@ -28,4 +28,10 @@ public final class Converter {
     public static String toCellReference(int row, int col) {
         return "" + toAlphabetical(col) + row;
     }
+//
+//    public static String replaceMultipleSignOperators(String input){
+//        for(int i=0;i<input.length();i++){
+//
+//        }
+//    }
 }
