@@ -49,8 +49,15 @@ public enum Operation {
                 return Operation.Multiplication;
             case "/":
                 return Operation.Division;
-            default:
+            case "^":
                 return Operation.Exponentiation;
+            default:
+                throw new RuntimeException() {
+                    @Override
+                    public String getMessage() {
+                        return "invalid constructor operation" + s;
+                    }
+                };
         }
     }
 
@@ -68,8 +75,10 @@ public enum Operation {
                 return a.add(b);
             case Multiplication:
                 return a.multiply(b);
-            default:
+            case Exponentiation:
                 return BigDecimalMath.pow(a, b, mc);
+            default:
+                throw new RuntimeException();
         }
     }
 

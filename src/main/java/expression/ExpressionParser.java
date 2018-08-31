@@ -72,7 +72,6 @@ public class ExpressionParser {
                 if (input.charAt(pointer) == '(') {
                     if (balance == 0) {
                         appendArraysWithExpression(input.substring(start, pointer), leafNodes, innerNodes);
-//                        newCrazyIdea(input.substring(start, pointer), leafNodes, innerNodes);
                         start = pointer + 1;
                     }
                     balance++;
@@ -88,7 +87,6 @@ public class ExpressionParser {
                     pointer++;
                     if (pointer == input.length()) {
                         appendArraysWithExpression(input.substring(start, pointer), leafNodes, innerNodes);
-//                        newCrazyIdea(input.substring(start, pointer), leafNodes, innerNodes);
                     }
                 }
             }
@@ -107,8 +105,8 @@ public class ExpressionParser {
 
         List<Node> leafNodes = new ArrayList<>();
         List<InnerNode> innerNodes = new ArrayList<>();
+
         appendArraysWithExpression(input, leafNodes, innerNodes);
-//        newCrazyIdea(input, leafNodes, innerNodes);
 
         Set<Node> treeNodes = new HashSet<>(leafNodes);
         treeNodes.addAll(innerNodes);
@@ -136,32 +134,4 @@ public class ExpressionParser {
         );
     }
 
-//    static void newCrazyIdea(
-//            String input,
-//            List<Node> leafNodes,
-//            List<InnerNode> innerNodes){
-//        char ch;
-//        int i=0;
-//        int begin=i;
-//        i++;
-//        while(i<input.length()){
-//            ch = input.charAt(i);
-//            if(ch=='+'||ch=='-'||ch=='^'||ch=='/'||ch=='*') {
-//                if(!input.substring(begin, i).isEmpty())
-//                {
-//                    if(isValidOperator(input.substring(begin, i))){
-//                        innerNodes.add(new InnerNode("" + input.charAt(i)));
-//                    }else{
-//                        leafNodes.add(new LeafNode(input.substring(begin, i)));
-//                    }
-//                }
-//                innerNodes.add(new InnerNode("" + input.charAt(i)));
-//                begin=i+1;
-//            }
-//            i++;
-//        }
-//        if((begin!=0&&i!=1)&&!input.substring(begin, i).isEmpty()){
-//            leafNodes.add(new LeafNode(input.substring(begin, i)));
-//        }
-//    }
 }

@@ -1,5 +1,6 @@
 package table;
 
+import dependency.DependencyGraph;
 import expression.ExpressionParser;
 import org.junit.jupiter.api.Test;
 
@@ -178,8 +179,8 @@ class TableTest {
         //TODO this test is about the toPrint() method in Table class which should use
         //TODO DependencyGraph.calculate() before adding any values to thew string !!!
 
-//        DependencyGraph dg = new DependencyGraph(myTable);
-//        dg.calculate();
+        DependencyGraph dg = new DependencyGraph(myTable);
+        dg.calculate();
 //        System.out.println(dg.getInDegree());
 
 //        assertEquals("\n" +

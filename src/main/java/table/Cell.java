@@ -88,9 +88,11 @@ public class Cell {
      */
 
     String getExpressionAsString() {
-        if (expressionTree != null) return expressionTree.getExpression();
-        if (value != null) return value.setScale(3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
-        else return null;
+        if (expressionTree != null) {
+            return expressionTree.getExpression();
+        } else {
+            return value.setScale(3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+        }
     }
 
     public void setExpression(ExpressionTree expression) {

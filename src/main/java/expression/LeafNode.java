@@ -5,6 +5,7 @@ import java.math.MathContext;
 
 import static java.lang.Double.parseDouble;
 import static java.math.RoundingMode.HALF_UP;
+import static utilities.Converter.replaceMultipleSignOperators;
 import static utilities.Validator.isValidCellPosition;
 
 class LeafNode implements Node {
@@ -20,7 +21,7 @@ class LeafNode implements Node {
         } else {
             this.isReference = false;
             this.cellReference = null;
-            this.value = new BigDecimal(parseDouble(initial), new MathContext(15, HALF_UP));
+            this.value = new BigDecimal(parseDouble(replaceMultipleSignOperators(initial)), new MathContext(15, HALF_UP));
         }
     }
 

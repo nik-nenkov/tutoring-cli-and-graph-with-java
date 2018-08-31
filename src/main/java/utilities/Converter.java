@@ -28,10 +28,24 @@ public final class Converter {
     public static String toCellReference(int row, int col) {
         return "" + toAlphabetical(col) + row;
     }
-//
-//    public static String replaceMultipleSignOperators(String input){
-//        for(int i=0;i<input.length();i++){
-//
-//        }
-//    }
+
+    public static String replaceMultipleSignOperators(String input) {
+        if (input.length() < 2) return input;
+        StringBuilder sb = new StringBuilder(input);
+        char ch1 = sb.charAt(0);
+        char ch2 = sb.charAt(1);
+        if (ch1 == '-' || ch1 == '+') {
+            while (ch2 == '-' || ch2 == '+') {
+                if ((ch1 == '-' && ch2 == '+') || (ch1 == '+' || ch2 == '-')) {
+                    sb.setCharAt(1, '-');
+                } else {
+                    sb.setCharAt(1, '+');
+                }
+                sb.deleteCharAt(0);
+                ch1 = sb.charAt(0);
+                ch2 = sb.charAt(1);
+            }
+        }
+        return sb.toString();
+    }
 }

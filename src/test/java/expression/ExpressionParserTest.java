@@ -141,18 +141,13 @@ class ExpressionParserTest {
     @Test
     void someNegativeNumbers() {
         assertEquals(BigDecimal.valueOf(8),
-                ExpressionParser.parse("-3+11").getResult());
+                ExpressionParser.parse("-3*11").getResult());
     }
-//
-//    @Test
-//    void myIdea(){
-//        String input = "6-7*3";
-//        List<InnerNode> innerNodes = new ArrayList<>();
-//        List<Node> leafNodes = new ArrayList<>();
-//        newCrazyIdea(input,leafNodes,innerNodes);
-//
-//        leafNodes.forEach(e-> System.out.println(e.toString()));
-//        innerNodes.forEach(e-> System.out.println(e.toString()));
-//
-//    }
+
+    @Test
+    void multipleUnaryOperators() {
+        assertEquals(BigDecimal.valueOf(8),
+                ExpressionParser.parse("9-++--+-3").getResult());
+    }
+
 }
