@@ -58,7 +58,7 @@ public class Table {
     public String toPrint() {
 
 
-//        dp.calculate();
+        dp.calculate();
         //TODO somewhere around this point we should recalculate before printing anything
 
         if (data.size() == 0) {

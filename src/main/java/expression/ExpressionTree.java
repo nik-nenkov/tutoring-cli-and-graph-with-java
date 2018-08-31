@@ -1,5 +1,7 @@
 package expression;
 
+import table.Table;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Set;
@@ -11,6 +13,7 @@ import java.util.Set;
  */
 public class ExpressionTree implements Node {
 
+    private static Table referenceTable;
     private final String reference;
     private final Node root;
     private final Set<Node> nodes;
@@ -27,10 +30,13 @@ public class ExpressionTree implements Node {
         this.reference = reference;
     }
 
+    public static void setReferenceTable(Table rt) {
+        referenceTable = rt;
+    }
+
     @Override
     public BigDecimal getValue() {
-        return reference == null ? root.getValue()
-                : BigDecimal.ZERO;
+        return root.getValue();
     }
 
     @Override

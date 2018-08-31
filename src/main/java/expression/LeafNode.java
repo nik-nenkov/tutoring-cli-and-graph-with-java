@@ -1,5 +1,7 @@
 package expression;
 
+import table.Table;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 
@@ -8,7 +10,13 @@ import static java.math.RoundingMode.HALF_UP;
 import static utilities.Converter.replaceMultipleSignOperators;
 import static utilities.Validator.isValidCellPosition;
 
-class LeafNode implements Node {
+public class LeafNode implements Node {
+    private static Table referenceTable;
+
+    public static void setReferenceTable(Table referenceTable) {
+        LeafNode.referenceTable = referenceTable;
+    }
+
     private final boolean isReference;
     private final BigDecimal value;
     private final String cellReference;
@@ -28,7 +36,7 @@ class LeafNode implements Node {
     @Override
     public BigDecimal getValue() {
         if (isReference) {
-            return null;
+            return referenceTable == null ? null : referenceTable.getCell(cellReference).getValue();
         }
         return value;
     }

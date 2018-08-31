@@ -1,6 +1,7 @@
 package dependency;
 
 import expression.ExpressionTree;
+import expression.LeafNode;
 import table.Cell;
 import table.Table;
 
@@ -21,6 +22,8 @@ public class DependencyGraph {
         this.outDegree = new HashMap<>();
         this.referenceTable = referenceTable;
         this.independentNodes = new HashSet<>();
+        LeafNode.setReferenceTable(referenceTable);
+        ExpressionTree.setReferenceTable(referenceTable);
     }
 
     public void addDependency(String position, String dependency) {
@@ -37,8 +40,14 @@ public class DependencyGraph {
         referenceTable.getCells().forEach(cell -> {
             if (cell.getExpressionTree() != null && cell.getExpressionTree().isReference()) {
                 findDependencies(cell.getExpressionTree());
+                calculateValue(cell);
             }
         });
+    }
+
+    private void calculateValue(Cell cell) {
+        ExpressionTree et = cell.getExpressionTree();
+        cell.setValue(et.getValue());
     }
 
     private void findDependencies(ExpressionTree et) {

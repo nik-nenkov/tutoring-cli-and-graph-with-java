@@ -55,10 +55,11 @@ public class Cell {
 
     void setValue(Double value) {
         this.value = BigDecimal.valueOf(value);
-        this.expressionTree = null;
-        this.content = null;
     }
 
+    public BigDecimal getValue() {
+        return this.expressionTree == null ? this.value : this.expressionTree.getValue();
+    }
     @Override
     public String toString() {
         //TODO make this return information if cell is still not calculated by graph !!!
@@ -108,5 +109,7 @@ public class Cell {
         return row;
     }
 
-
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
 }
