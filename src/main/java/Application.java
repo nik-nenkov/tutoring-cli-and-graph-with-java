@@ -3,9 +3,11 @@
 
 import table.Table;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
+import static table.TableEditor.saveTableToFile;
 import static utilities.Validator.isValidDecimal;
 
 public class Application {
@@ -18,7 +20,7 @@ public class Application {
     private static boolean isRunning = true;
     private static String lastInput;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         print(WELCOME_MESSAGE);
         while(isRunning){
             lastInput = scan.nextLine();
@@ -27,7 +29,7 @@ public class Application {
         print(GOODBYE_MESSAGE);
     }
 
-    private static void processQuery() {
+    private static void processQuery() throws IOException {
         switch(lastInput){
             case("/print"):
                 print(myTable.toPrint());
@@ -37,6 +39,9 @@ public class Application {
                 break;
             case("/info"):
                 print(APPLICATION_INFORMATION);
+                break;
+            case ("/save"):
+                saveTableToFile(scan.nextLine(), myTable);
                 break;
             default:
                 processEntry();

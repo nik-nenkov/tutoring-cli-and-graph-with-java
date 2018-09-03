@@ -34,17 +34,15 @@ public final class Converter {
         StringBuilder sb = new StringBuilder(input);
         char ch1 = sb.charAt(0);
         char ch2 = sb.charAt(1);
-        if (ch1 == '-' || ch1 == '+') {
-            while (ch2 == '-' || ch2 == '+') {
-                if ((ch1 == '-' && ch2 == '+') || (ch1 == '+' || ch2 == '-')) {
-                    sb.setCharAt(1, '-');
-                } else {
-                    sb.setCharAt(1, '+');
-                }
-                sb.deleteCharAt(0);
-                ch1 = sb.charAt(0);
-                ch2 = sb.charAt(1);
+        while (ch2 == '-' || ch2 == '+') {
+            if ((ch1 == '-' && ch2 == '+') || (ch1 == '+' && ch2 == '-')) {
+                sb.setCharAt(1, '-');
+            } else {
+                sb.setCharAt(1, '+');
             }
+            sb.deleteCharAt(0);
+            ch1 = sb.charAt(0);
+            ch2 = sb.charAt(1);
         }
         return sb.toString();
     }

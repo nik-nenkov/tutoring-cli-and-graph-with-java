@@ -3,10 +3,8 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="205.0" y="2330.0">dependency.DependencyNotSet</node>
     <node x="1364.8262572150072" y="1092.5">expression.ExpressionParser</node>
     <node x="2184.8262572150074" y="658.0">expression.InnerNode</node>
-    <node x="0.0" y="2330.0">dependency.DependencyCollision</node>
     <node x="460.52078282828256" y="1114.5">table.CellTest</node>
     <node x="1282.4512572150072" y="0.0">expression.Node</node>
     <node x="2208.808946608947" y="175.0">expression.Operation</node>

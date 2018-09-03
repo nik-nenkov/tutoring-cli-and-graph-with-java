@@ -63,10 +63,10 @@ public class Table {
         //TODO somewhere around this point we should recalculate before printing anything
 
         if (data.size() == 0) {
-            return "\nEmpty table!\n";
+            return "\r\nEmpty table!\r\n";
         }
 
-        StringBuilder tableToPrint = new StringBuilder("\n   ||");
+        StringBuilder tableToPrint = new StringBuilder("\r\n   ||");
 
         for (int k = 1; k <= numCols; k++) {
             tableToPrint
@@ -80,7 +80,7 @@ public class Table {
         }
 
         tableToPrint
-                .append("\n")
+                .append("\r\n")
                 .append(stringOfIdenticalSymbols(DEFAULT_COLUMN_WIDTH, "="));
 
         for (int k = 1; k <= numCols; k++) {
@@ -93,7 +93,7 @@ public class Table {
 
         for (int i = 1; i <= numRows; i++) {
             tableToPrint
-                    .append("\n ")
+                    .append("\r\n ")
                     .append(i)
                     .append(" ||");
 
@@ -109,7 +109,7 @@ public class Table {
             }
 
             tableToPrint
-                    .append("\n")
+                    .append("\r\n")
                     .append(stringOfIdenticalSymbols(DEFAULT_COLUMN_WIDTH, "-"));
 
             for (int k = 1; k <= numCols; k++) {
@@ -189,7 +189,7 @@ public class Table {
     String displayAllExpressions() {
         StringBuilder sb = new StringBuilder();
         this.data.forEach((row, v) -> v.forEach((col, cell) -> {
-            sb.append("\n\t")
+            sb.append("\r\n\t")
                     .append(toCellReference(row, col))
                     .append("=")
                     .append(cell.getExpressionAsString());

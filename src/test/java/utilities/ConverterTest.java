@@ -22,4 +22,13 @@ class ConverterTest {
                 replaceMultipleSignOperators("++++-+-++++-++4")
         );
     }
+
+
+    @Test
+    void replaceMultipleSignOperatorsThirdTry() {
+        assertEquals(
+                "-4",
+                replaceMultipleSignOperators("++++-+-++++-++4")
+        );
+    }
 }

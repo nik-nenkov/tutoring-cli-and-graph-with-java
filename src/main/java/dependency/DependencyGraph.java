@@ -61,24 +61,4 @@ public class DependencyGraph {
             });
         }
     }
-
-    public Map<Cell, Set<Cell>> getOutDegree() {
-        return outDegree;
-    }
-
-    public void setOutDegree(Map<Cell, Set<Cell>> outDegree) {
-        this.outDegree = outDegree;
-    }
-
-    public Set<Cell> getIndependentNodes() {
-        return independentNodes;
-    }
-
-    public void setIndependentNodes(Set<Cell> independentNodes) {
-        this.independentNodes = independentNodes;
-    }
-
-    public Map<Cell, Set<Cell>> getInDegree() {
-        return inDegree;
-    }
 }
